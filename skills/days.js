@@ -2,14 +2,16 @@
 // Main functionality
 //
 var PythonShell = require('python-shell');
+var path = require("path");
 module.exports = function (controller) {
 
     controller.hears([".*"], 'direct_message,direct_mention', function (bot, message) {
 
         var arg_day = message.text;
+        //console.log("__dirname = %s", path.resolve(__dirname));
         var options = {
             args: [arg_day],
-            scriptPath: './days-of-the-year/skills/'
+            scriptPath: path.resolve(__dirname)
         };
 
         PythonShell.run('source.py', options, function (err, results) {
