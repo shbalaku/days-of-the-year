@@ -7,7 +7,7 @@ var now = new Date();
 
 module.exports = function (controller) {
 
-    controller.hears([".*"], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears([".*"], 'direct_message', function (bot, message) {
 
         var arg_date = message.text;
         date = checkToday(arg_date);
