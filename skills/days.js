@@ -11,7 +11,7 @@ module.exports = function (controller) {
         console.log("__dirname = %s", path.resolve(__dirname));
         var options = {
             args: [arg_day],
-            scriptPath: path.resolve(__dirname)
+            scriptPath: '/app/skills/'
         };
 
         PythonShell.run('source.py', options, function (err, results) {
