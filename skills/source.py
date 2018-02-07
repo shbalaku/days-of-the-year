@@ -7,6 +7,12 @@ import json
 import datetime
 
 
+#Read data from stdin
+def read_in():
+    data = sys.stdin.readlines()
+    #Since our input would only be having one line, parse our JSON data from that
+    return json.loads(data[0])
+
 def format_date(date):
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     suffix = ['st', 'nd', 'rd', 'th']

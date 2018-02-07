@@ -14,8 +14,11 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "0.6.0",
+    "cheerio": "^1.0.0-rc.2",
+    "jssoup": "0.0.6",
     "node-env-file": "0.1.8",
-    "python-shell": "^0.4.0"
+    "python-shell": "^0.4.0",
+    "x-ray": "^2.3.2"
   },
   "repository": {
     "type": "git",
