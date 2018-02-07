@@ -8,7 +8,7 @@ module.exports = function (controller) {
     controller.hears([".*"], 'direct_message,direct_mention', function (bot, message) {
 
         var arg_day = message.text;
-        //console.log("__dirname = %s", path.resolve(__dirname));
+        console.log("__dirname = %s", path.resolve(__dirname));
         var options = {
             args: [arg_day],
             scriptPath: path.resolve(__dirname)
