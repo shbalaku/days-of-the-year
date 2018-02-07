@@ -9,7 +9,7 @@ module.exports = function (controller) {
         var arg_day = message.text;
         var options = {
             args: [arg_day],
-            scriptPath: '/Users/shbalaku/Documents/botkit-template/skills/'
+            scriptPath: '../'
         };
 
         PythonShell.run('source.py', options, function (err, results) {
