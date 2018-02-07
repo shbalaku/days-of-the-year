@@ -9,7 +9,7 @@ module.exports = function (controller) {
         var arg_day = message.text;
         var options = {
             args: [arg_day],
-            scriptPath: '../'
+            scriptPath: './days-of-the-year/skills/'
         };
 
         PythonShell.run('source.py', options, function (err, results) {
