@@ -7,9 +7,16 @@ var now = new Date();
 
 module.exports = function (controller) {
 
-    controller.hears([".*"], 'direct_message', function (bot, message) {
+    controller.hears([".*"], 'direct_message, direct_mention', function (bot, message) {
 
-        var arg_date = message.text;
+        var s = message.text.slice(0,4);
+        console.log(s);
+        var arg_date = "";
+        if (s == "Days")
+          arg_date = message.text.slice(5);
+        else
+          arg_date = message.text;
+
         date = checkToday(arg_date);
         [date_format1, date_format2] = format_date(date);
         //console.log(date_format1);
