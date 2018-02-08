@@ -9,8 +9,8 @@ module.exports = function (controller) {
 
     controller.hears([".*"], 'direct_mention', function (bot, message) {
 
-        var arg_date = message.text;
-        console.log(arg_date[1]);
+        var arg_date = message.text.slice(5);
+        //console.log(arg_date.slice(5));
         date = checkToday(arg_date);
         [date_format1, date_format2] = format_date(date);
         //console.log(date_format1);
