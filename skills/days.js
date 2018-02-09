@@ -7,10 +7,9 @@ var now = new Date();
 
 module.exports = function (controller) {
 
-    controller.on('direct_message', function (bot, message) {
+    controller.hears([".*"], 'direct_message, direct_mention', function (bot, message) {
 
         var s = message.text.slice(0,4);
-        console.log(s);
         var arg_date = "";
         if (s == "Days")
           arg_date = message.text.slice(5);
