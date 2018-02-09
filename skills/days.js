@@ -7,7 +7,7 @@ var now = new Date();
 
 module.exports = function (controller) {
 
-    controller.on('direct_message, direct_mention', function (bot, message) {
+    controller.on('direct_message', function (bot, message) {
 
         var s = message.text.slice(0,4);
         console.log(s);
