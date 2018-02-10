@@ -70,7 +70,7 @@ function format_date(date){
 function encodeTomorrow() {
   var d;
   var tomorrow = new Date();
-  tomorrow.setDate(today.getDate()+1);
+  tomorrow.setDate(now.getDate()+1);
 
   if (tomorrow.getMonth()+1<10)
       mon = '0'+(tomorrow.getMonth()+1).toString();
