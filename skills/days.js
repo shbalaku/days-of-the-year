@@ -9,8 +9,8 @@ module.exports = function (controller) {
 
     controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
 
-        var month = message.match[1].slice(-2);
-        var day = message.match[2];
+        var day = message.match[1].slice(-2);
+        var month = message.match[2];
 
         date = month + "/" + day;
         //date = checkToday(arg_date);

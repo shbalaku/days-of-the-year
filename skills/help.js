@@ -4,7 +4,7 @@
 module.exports = function (controller) {
 
     controller.hears('help', 'direct_message,direct_mention', function (bot, message) {
-        var text = '**Help**\n* Format of command: <month><day>\n* Example: 01/17';
+        var text = '**Help**\n* Format of command: <dd><mm>\n* Example: 01/17';
         bot.reply(message, text);
         /*var text = "Here are my skills:";
         text += "\n- " + bot.appendMention(message, "color") + ": ask to pick a random color";
