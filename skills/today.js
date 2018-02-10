@@ -7,13 +7,9 @@ var now = new Date();
 
 module.exports = function (controller) {
 
-    controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
+    controller.hears('today', 'direct_mention, direct_message', function (bot, message) {
 
-        var month = message.match[1].replace("Days ","");
-        var day = message.match[2];
-
-        date = month + "/" + day;
-        //date = checkToday(arg_date);
+        date = checkToday();
         [date_format1, date_format2] = format_date(date);
         year = now.getFullYear().toString();
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
@@ -31,7 +27,7 @@ module.exports = function (controller) {
               }
             }
             if (results.length == 0)
-              bot.reply(message, "Something went wrong. Please check you have entered a valid date in the following format: xx/xx. Thank you. Sorry this happened...awkward.");
+              bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
             else {
               // results is an array consisting of messages collected during execution
               var date_message = "**"+date_format1+"**";
@@ -69,4 +65,19 @@ function format_date(date){
 
   month_str = months[month-1];
   return [month_str+" " + day + suff, day + suff + " " + month_str];
+}
+
+function checkToday() {
+  var d;
+  if (now.getMonth()+1<10)
+      mon = '0'+(now.getMonth()+1).toString();
+  else
+      mon = (now.getMonth()+1).toString();
+  if (now.getDate()<10)
+      day = '0'+now.getDate().toString();
+  else
+      day = now.getDate().toString();
+  d = mon + "/" + day;
+
+  return d;
 }
