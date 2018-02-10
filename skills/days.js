@@ -9,7 +9,7 @@ module.exports = function (controller) {
 
     controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
 
-        var month = message.match[1].replace("Days ","");
+        var month = message.match[1].slice(-2);
         var day = message.match[2];
 
         date = month + "/" + day;
