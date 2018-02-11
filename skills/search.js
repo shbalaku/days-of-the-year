@@ -57,7 +57,7 @@ module.exports = function (controller) {
 
                 // bot reply all matches found
                 bot.reply(message, "**I found the following matching day(s):**\n\n");
-                for (var i = 0; i < matches.length && i<=5; i++) {
+                for (var i = 0; i < matches.length; i++) {
                   link = days_list[i].nextElement.attrs.href;
                   var result;
                   request(link, function(_err, _resp, _html) {
