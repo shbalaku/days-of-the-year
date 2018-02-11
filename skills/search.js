@@ -3,6 +3,7 @@
 //
 var request = require('request');
 var JSSoup = require('jssoup').default;
+var fuzzy = require('fuzzy')
 
 module.exports = function (controller) {
 
@@ -40,7 +41,34 @@ module.exports = function (controller) {
                 });
               }
               else {
-                bot.reply(message, "It seems the day you've tried to search for could not be found.");
+                // no exact match found
+                var query_split = query.split(" ");
+                var list = [];
+                for (var i = 0; i < days_list.length; i++) {
+                  list[i] = days_list[i].text;
+                }
+                for (var i = 0; i < query_split.length - 1; i++) {
+                  var word_i = query_split[i];
+                  var results = fuzzy.filter(word_i, list);
+                  var matches = results.map(function(el) { return el.string; });
+                  if (matches != [])
+                    break;
+                }
+
+                // bot reply all matches found
+                for (var i = 0; i < matches.length && i<=5; i++) {
+                  link = days_list[i].nextElement.attrs.href;
+                  var result;
+                  request(link, function(_err, _resp, _html) {
+                    if (!_err){
+                      var _soup = new JSSoup(_html);
+                      var date = _soup.find('div', 'banner__title banner__title-small');
+                      var day_message = _soup.find('h1', 'banner__title');
+                      result = date.text + ' ' + day_message.text;
+                      bot.reply(message, result);
+                    }
+                  });
+                }
               }
             }
             else{
