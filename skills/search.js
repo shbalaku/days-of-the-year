@@ -56,19 +56,24 @@ module.exports = function (controller) {
                 }
 
                 // bot reply all matches found
-                bot.reply(message, "**I found the following matching day(s):**\n\n");
-                for (var i = 0; i < matches.length; i++) {
-                  link = days_list[i].nextElement.attrs.href;
-                  var result;
-                  request(link, function(_err, _resp, _html) {
-                    if (!_err){
-                      var _soup = new JSSoup(_html);
-                      var date = _soup.find('div', 'banner__title banner__title-small');
-                      var day_message = _soup.find('h1', 'banner__title');
-                      result = date.text + ' ' + day_message.text;
-                      bot.reply(message, result);
-                    }
-                  });
+                if (matches.length > 0) {
+                  bot.reply(message, "**I found the following matching day(s):**\n\n");
+                  for (var i = 0; i < matches.length; i++) {
+                    link = days_list[i].nextElement.attrs.href;
+                    var result;
+                    request(link, function(_err, _resp, _html) {
+                      if (!_err){
+                        var _soup = new JSSoup(_html);
+                        var date = _soup.find('div', 'banner__title banner__title-small');
+                        var day_message = _soup.find('h1', 'banner__title');
+                        result = date.text + ' ' + day_message.text;
+                        bot.reply(message, result);
+                      }
+                    });
+                  }
+                }
+                else {
+                  bot.reply(message, "It seems the day you've tried to search for could not be found.");
                 }
               }
             }
