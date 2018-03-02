@@ -11,11 +11,11 @@ module.exports = function (controller) {
 
         date = checkToday();
         [date_format1, date_format2] = format_date(date);
-        year = now.getFullYear().toString();
-        uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
+        //year = now.getFullYear().toString();
+        //uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
-        var results = [];
-
+        //var results = [];
+        /*
         request(uri_str, function(err, resp, html) {
           if (!err){
             var soup = new JSSoup(html);
@@ -38,7 +38,10 @@ module.exports = function (controller) {
               bot.reply(message, output_list);
             }
           }
-        });
+        });*/
+        var date_message = "**"+date_format1+"**";
+        var output_list=date_message + '\n' + '\n* Roger passes CCNP Switch day';
+        bot.reply(message, output_list);
     });
 }
 
