@@ -42,9 +42,9 @@ module.exports = function (controller) {
                 output_list = output_list + '\n* ' + results[i];
               }
               bot.reply(message, output_list);
-              client.connect();
-              client.query('INSERT INTO items(text, data) values($1, $2)' ["Last Output", "test"]);
-              client.end();
+              //client.connect();
+              //client.query('INSERT INTO items(text, data) values($1, $2)' ["Last Output", "test"]);
+              //client.end();
             }
           }
         });
