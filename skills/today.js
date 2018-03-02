@@ -4,6 +4,12 @@
 var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 
 module.exports = function (controller) {
 
@@ -36,6 +42,9 @@ module.exports = function (controller) {
                 output_list = output_list + '\n* ' + results[i];
               }
               bot.reply(message, output_list);
+              client.connect();
+              client.query('INSERT INTO items(text, data) values($1, $2)' ["Last Output", results]);
+              client.end();
             }
           }
         });
