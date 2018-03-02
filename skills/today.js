@@ -4,6 +4,7 @@
 var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
+var fs = require('fs');
 
 module.exports = function (controller) {
 
@@ -36,6 +37,11 @@ module.exports = function (controller) {
                 output_list = output_list + '\n* ' + results[i];
               }
               bot.reply(message, output_list);
+              // store output to file
+              var file = fs.createWriteStream('lastOutput.txt');
+              //file.on('error', function(err) { /* error handling */ });
+              results.forEach(function(v) { file.write(v.join(', ') + '\n'); });
+              file.end();
             }
           }
         });
