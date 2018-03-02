@@ -43,7 +43,7 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
               client.connect();
-              client.query('INSERT INTO postgresql-triangular-91273(text, data) VALUES ("Last Output", "Test")';
+              client.query('CREATE TABLE lastOutput(text VARCHAR(30))');
               client.end();
             }
           }
