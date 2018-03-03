@@ -18,7 +18,7 @@ module.exports = function (controller) {
 
         // look up date in cache table
         output = cacheLookup(date_format1);
-        if (output) {
+        if (output != []) {
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
           for (var i=0; i<results.length; i++){
@@ -26,60 +26,60 @@ module.exports = function (controller) {
           }
           bot.reply(message, output_list);
           console.log("Cache lookup successful");
-          return 1;
         }
+        else {
+          console.log("Cache lookup unsuccessful");
 
-        console.log("Cache lookup unsuccessful");
+          year = now.getFullYear().toString();
+          uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
-        year = now.getFullYear().toString();
-        uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
-
-        request(uri_str, function(err, resp, html) {
-          if (!err){
-            var soup = new JSSoup(html);
-            var days_list = soup.findAll('h3', 'card-title');
-            var days_list2 = soup.findAll('h4', 'card-title-secondary');
-            for (var i = 0; i < days_list2.length; i++) {
-              if (((days_list2[i].text).indexOf(date_format1)>-1) || ((days_list[i].text).indexOf(date_format2)>-1)) {
-                results = results.concat(days_list[i].text);
+          request(uri_str, function(err, resp, html) {
+            if (!err){
+              var soup = new JSSoup(html);
+              var days_list = soup.findAll('h3', 'card-title');
+              var days_list2 = soup.findAll('h4', 'card-title-secondary');
+              for (var i = 0; i < days_list2.length; i++) {
+                if (((days_list2[i].text).indexOf(date_format1)>-1) || ((days_list[i].text).indexOf(date_format2)>-1)) {
+                  results = results.concat(days_list[i].text);
+                }
               }
-            }
-            if (results.length == 0)
-              bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
-            else {
-              // results is an array consisting of messages collected during execution
-              var date_message = "**"+date_format1+"**";
-              var output_list=date_message + '\n';
-              for (var i=0; i<results.length; i++){
-                output_list = output_list + '\n* ' + results[i];
-              }
-              bot.reply(message, output_list);
+              if (results.length == 0)
+                bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
+              else {
+                // results is an array consisting of messages collected during execution
+                var date_message = "**"+date_format1+"**";
+                var output_list=date_message + '\n';
+                for (var i=0; i<results.length; i++){
+                  output_list = output_list + '\n* ' + results[i];
+                }
+                bot.reply(message, output_list);
 
-              var client = createClient();
-              client.connect( function (err) {
-                if (err) throw err;
-
-                // execute query
-                client.query('DELETE FROM lastOutput;', function(err) {
+                var client = createClient();
+                client.connect( function (err) {
                   if (err) throw err;
-                  // execute addition to table query
-                  client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
-                    if (err) throw err;
 
-                    // execute cache insertion query
-                    client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function (err) {
+                  // execute query
+                  client.query('DELETE FROM lastOutput;', function(err) {
+                    if (err) throw err;
+                    // execute addition to table query
+                    client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
                       if (err) throw err;
-                      // end connection
-                      client.end( function (err) {
+
+                      // execute cache insertion query
+                      client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function (err) {
                         if (err) throw err;
+                        // end connection
+                        client.end( function (err) {
+                          if (err) throw err;
+                        });
                       });
                     });
                   });
                 });
-              });
+              }
             }
-          }
-        });
+          });
+        }
     });
 }
 
