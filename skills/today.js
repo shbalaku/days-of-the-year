@@ -13,18 +13,19 @@ module.exports = function (controller) {
         date = checkToday();
         [date_format1, date_format2] = format_date(date);
 
+        var output;
         var results = [];
 
         // look up date in cache table
-        results = cacheLookup(date_format1);
-        if (results) {
+        output = cacheLookup(date_format1);
+        if (output) {
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
           for (var i=0; i<results.length; i++){
             output_list = output_list + '\n* ' + results[i];
           }
           bot.reply(message, output_list);
-          console.log("Cache lookup unsuccessful");
+          console.log("Cache lookup successful");
           return 1;
         }
 
