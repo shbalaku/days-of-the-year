@@ -9,7 +9,7 @@ module.exports = function (controller) {
     controller.hears('cache (.*)', 'direct_mention, direct_message', function (bot, message) {
 
       var query = message.match[1];
-
+      console.log(query);
       // Establish client POSTGRESQL
       var client = createClient();
 
@@ -25,12 +25,7 @@ module.exports = function (controller) {
             var row_count = res.rows.length;
             if (row_count > 0) {
               var date = res.rows[0].date;
-              var days = res.rows[0].days;
-              var date_message = "**"+date+"**";
-              var output_list=date_message + '\n';
-              for (var i=0; i<days.length; i++){
-                output_list = output_list + '\n* ' + days[i];
-              }
+              var output_list = query + " is celebrated on " + "**"+date+"**";
               bot.reply(message, output_list);
             }
             else {
