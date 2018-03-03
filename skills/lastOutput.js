@@ -16,7 +16,14 @@ module.exports = function (controller) {
         client.query('SELECT * FROM lastOutput;', (err, res) => {
           console.log(err);
           client.end();
-          console.log(res);
+          var date = res.rows[0].date;
+          var days = res.rows[0].days;
+          var date_message = "**"+date+"**";
+          var output_list=date_message + '\n';
+          for (var i=0; i<days.length; i++){
+            output_list = output_list + '\n* ' + days[i];
+          }
+          bot.reply(message, output_list);
         });
     });
 }
