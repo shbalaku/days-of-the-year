@@ -43,7 +43,7 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
               client.connect();
-              client.query('CREATE TABLE lastOutput(text VARCHAR(30))');
+              client.query('INSERT INTO lastOutput VALUES (' + date_format1 + ', ' + results + ');');
               client.end();
             }
           }
