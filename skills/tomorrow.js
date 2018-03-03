@@ -25,6 +25,8 @@ module.exports = function (controller) {
             console.log("Cache lookup successful");
           }
           else {
+            console.log("Cache lookup unsuccessful");
+
             year = now.getFullYear().toString();
             uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
@@ -62,9 +64,13 @@ module.exports = function (controller) {
                       // execute addition to table query
                       client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
                         if (err) throw err;
-                        // end connection
-                        client.end( function (err) {
+                        // execute cache insertion query
+                        client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function (err) {
                           if (err) throw err;
+                          // end connection
+                          client.end( function (err) {
+                            if (err) throw err;
+                          });
                         });
                       });
                     });
