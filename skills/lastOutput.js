@@ -17,7 +17,7 @@ module.exports = function (controller) {
         if (err) throw err;
 
         // execute query
-        await client.query('SELECT * FROM lastOutput;', function(err, res) {
+        client.query('SELECT * FROM lastOutput;', function(err, res) {
             if (err) throw err;
 
             client.end(function(err) {
