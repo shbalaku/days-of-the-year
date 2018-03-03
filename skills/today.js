@@ -44,11 +44,7 @@ module.exports = function (controller) {
               bot.reply(message, output_list);
               client.connect();
               client.query('DELETE FROM lastOutput;');
-              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], (err, res) => {
-                console.log(err); // Hello World!
-              });
-              //client.query('INSERT INTO lastOutput VALUES (' + date_format1 + ', ' + results + ');');
-              //client.end();
+              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results]);
             }
           }
         });
