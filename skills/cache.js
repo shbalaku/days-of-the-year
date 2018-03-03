@@ -9,7 +9,7 @@ module.exports = function (controller) {
     controller.hears('cache (.*)', 'direct_mention, direct_message', function (bot, message) {
 
       var query = message.match[1];
-      console.log(query);
+      
       // Establish client POSTGRESQL
       var client = createClient();
 
@@ -30,6 +30,7 @@ module.exports = function (controller) {
             }
             else {
               client.query('SELECT * FROM cache WHERE date = $1;', query, function(err, res) {
+                row_count = res.rows.length;
                 if (row_count > 0) {
                   var date = res.rows[0].date;
                   var days = res.rows[0].days;
