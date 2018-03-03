@@ -17,8 +17,12 @@ module.exports = function (controller) {
         if (err) throw err;
 
         // execute query
-        client.query('SELECT * FROM lastOutput;', function(err, res) {
+        await client.query('SELECT * FROM lastOutput;', function(err, res) {
             if (err) throw err;
+
+            client.end(function(err) {
+              if (err) throw err;
+            });
 
             // process results
             var date = res.rows[0].date;
@@ -29,9 +33,7 @@ module.exports = function (controller) {
               output_list = output_list + '\n* ' + days[i];
             }
             bot.reply(message, output_list);
-            client.end(function(err) {
-              if (err) throw err;
-            });
+
           });
         });
       });
