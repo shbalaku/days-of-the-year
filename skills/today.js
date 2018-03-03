@@ -17,7 +17,7 @@ module.exports = function (controller) {
 
         // look up date in cache table
         results = cacheLookup(date_format1);
-        if (results != []) {
+        if (results) {
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
           for (var i=0; i<results.length; i++){
