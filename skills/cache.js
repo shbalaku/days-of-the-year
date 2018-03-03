@@ -47,7 +47,7 @@ module.exports = function (controller) {
                 // end connection
                 client.end(function(err) {
                   if (err) throw err;
-                })
+                });
               });
             }
           });
