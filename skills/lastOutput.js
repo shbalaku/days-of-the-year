@@ -18,7 +18,7 @@ module.exports = function (controller) {
 
         // execute query
         client.query('SELECT * FROM lastOutput;', function(err, res) {
-            if (err) throw err;
+            if (err) console.log(err);
 
             // process results
             var date = res.rows[0].date;
