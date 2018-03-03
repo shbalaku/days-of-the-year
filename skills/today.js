@@ -12,10 +12,27 @@ module.exports = function (controller) {
 
         date = checkToday();
         [date_format1, date_format2] = format_date(date);
-        year = now.getFullYear().toString();
-        uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
         var results = [];
+        var output;
+
+        // look up date in cache table
+        output = cacheLookup(date_format1);
+        if (output != null) {
+          results = output;
+          var date_message = "**"+date_format1+"**";
+          var output_list=date_message + '\n';
+          for (var i=0; i<results.length; i++){
+            output_list = output_list + '\n* ' + results[i];
+          }
+          bot.reply(message, output_list);
+          return 1;
+        }
+
+        console.log("Cache lookup unsuccessful");
+
+        year = now.getFullYear().toString();
+        uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
         request(uri_str, function(err, resp, html) {
           if (!err){
@@ -48,9 +65,14 @@ module.exports = function (controller) {
                   // execute addition to table query
                   client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
                     if (err) throw err;
-                    // end connection
-                    client.end( function (err) {
+
+                    // execute cache insertion query
+                    client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function (err) {
                       if (err) throw err;
+                      // end connection
+                      client.end( function (err) {
+                        if (err) throw err;
+                      });
                     });
                   });
                 });
@@ -107,4 +129,26 @@ function createClient() {
     ssl: true,
   });
   return client;
+}
+
+function cacheLookup(date) {
+  var client = createClient();
+
+  client.connect( function(err) {
+    if (err) throw err;
+
+    // execute query
+    client.query('SELECT * FROM cache WHERE date = $1;', date, function(err, res) {
+      if (err) throw err;
+      // process results
+      var row_count = res.rows.length;
+      if (row_count > 0) {
+        var results = res.rows[0].days;
+        return results;
+      }
+      else {
+        return null;
+      }
+    });
+  })
 }
