@@ -138,7 +138,7 @@ function cacheLookup(date) {
     if (err) throw err;
 
     // execute query
-    client.query('SELECT * FROM cache WHERE date = $1;', date, function(err, res) {
+    client.query('SELECT * FROM cache WHERE date = $1;', [date], function(err, res) {
       if (err) throw err;
       // process results
       var row_count = res.rows.length;
