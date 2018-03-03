@@ -1,6 +1,6 @@
 //
 // Copyright (c) 2017 Cisco Systems
-// Licensed under the MIT License 
+// Licensed under the MIT License
 //
 
 //
@@ -60,6 +60,12 @@ var controller = Botkit.sparkbot({
 var bot = controller.spawn({
 });
 
+// Establish client POSTGRESQL
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 
 //
 // Launch bot

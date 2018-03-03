@@ -1,14 +1,8 @@
 //
 // Retrive last output functionality
 //
-const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
-
-module.exports = function (controller) {
+module.exports = function (controller, client) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
@@ -23,6 +17,7 @@ module.exports = function (controller) {
             output_list = output_list + '\n* ' + days[i];
           }
           bot.reply(message, output_list);
+          client.end();
         });
     });
 }
