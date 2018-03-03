@@ -152,6 +152,9 @@ function cacheLookup(date, callback) {
       else {
         callback(0);
       }
+      client.end(function(err) {
+        if(err) throw err;
+      });
     });
   });
 }

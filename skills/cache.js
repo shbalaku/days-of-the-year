@@ -44,6 +44,10 @@ module.exports = function (controller) {
                 else {
                   bot.reply(message, "It seems the day you've tried to search for could not be found in the cache.");
                 }
+                // end connection
+                client.end(function(err) {
+                  if (err) throw err;
+                })
               });
             }
           });
