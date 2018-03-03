@@ -13,13 +13,13 @@ module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
-      client.connect(function(err) {
+      await client.connect(function(err) {
         if (err) throw err;
 
         // execute query
         client.query('SELECT * FROM lastOutput;', function(err, res) {
             if (err) throw err;
-            
+
             // process results
             var date = res.rows[0].date;
             var days = res.rows[0].days;

@@ -42,7 +42,8 @@ module.exports = function (controller) {
                 output_list = output_list + '\n* ' + results[i];
               }
               bot.reply(message, output_list);
-              client.connect( function (err) {
+
+              await client.connect( function (err) {
                 if (err) throw err;
 
                 // execute query
