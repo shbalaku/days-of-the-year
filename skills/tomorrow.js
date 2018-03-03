@@ -6,11 +6,6 @@ var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
-
 module.exports = function (controller) {
 
     controller.hears('tomorrow', 'direct_mention, direct_message', function (bot, message) {

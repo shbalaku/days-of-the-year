@@ -4,6 +4,7 @@
 var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
+const { Client } = require('pg');
 
 module.exports = function (controller) {
 

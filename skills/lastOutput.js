@@ -2,7 +2,7 @@
 // Retrive last output functionality
 //
 
-
+const { Client } = require('pg');
 
 module.exports = function (controller) {
 
