@@ -142,6 +142,7 @@ function cacheLookup(date) {
       if (err) throw err;
       // process results
       var row_count = res.rows.length;
+      console.log(row_count);
       if (row_count > 0) {
         var results = res.rows[0].days;
         return results;
