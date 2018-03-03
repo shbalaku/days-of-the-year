@@ -43,7 +43,7 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
               client.connect();
-              client.query('INSERT INTO lastOutput VALUES ($1, $2);', date_format1, results, (err, res) => {
+              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], (err, res) => {
                 console.log(err); // Hello World!
                 client.end();
               });
