@@ -46,7 +46,7 @@ module.exports = function (controller) {
               client.query('DELETE FROM lastOutput;');
               client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], (err, res) => {
                 console.log(err); // Hello World!
-                client.end();
+                done();
               });
               //client.query('INSERT INTO lastOutput VALUES (' + date_format1 + ', ' + results + ');');
               //client.end();
