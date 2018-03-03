@@ -13,12 +13,11 @@ module.exports = function (controller) {
         date = checkToday();
         [date_format1, date_format2] = format_date(date);
 
-        var results = [];
-        var output;
+        var results = [], output = [], bool;
 
         // look up date in cache table
-        output = cacheLookup(date_format1);
-        if (output != null) {
+        [bool, output] = cacheLookup(date_format1);
+        if (bool) {
           results = output;
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
@@ -26,6 +25,7 @@ module.exports = function (controller) {
             output_list = output_list + '\n* ' + results[i];
           }
           bot.reply(message, output_list);
+          console.log("Cache lookup unsuccessful");
           return 1;
         }
 
@@ -142,13 +142,12 @@ function cacheLookup(date) {
       if (err) throw err;
       // process results
       var row_count = res.rows.length;
-      console.log(row_count);
       if (row_count > 0) {
         var results = res.rows[0].days;
-        return results;
+        return [true, results];
       }
       else {
-        return null;
+        return [false, []];
       }
     });
   })
