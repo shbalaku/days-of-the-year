@@ -13,7 +13,7 @@ module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
-      await client.connect(function(err) {
+      client.connect(function(err) {
         if (err) throw err;
 
         // execute query

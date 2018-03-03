@@ -43,7 +43,7 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
 
-              await client.connect( function (err) {
+              client.connect( function (err) {
                 if (err) throw err;
 
                 // execute query
