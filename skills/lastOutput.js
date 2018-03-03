@@ -13,8 +13,8 @@ module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
-      //client.connect(function(err) {
-        //if (err) throw err;
+      client.connect(function(err) {
+        if (err) throw err;
 
         // execute query
         client.query('SELECT * FROM lastOutput;', function(err, res) {
@@ -34,6 +34,5 @@ module.exports = function (controller) {
             });
           });
         });
-      //});
-    });
+      });
 }
