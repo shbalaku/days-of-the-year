@@ -18,8 +18,8 @@ module.exports = function (controller) {
 
         // execute query
         client.query('SELECT * FROM lastOutput;', function(err, res) {
-
-            console.log(res);
+            if (err) throw err;
+            
             // process results
             var date = res.rows[0].date;
             var days = res.rows[0].days;
