@@ -2,9 +2,9 @@
 // Retrive last output functionality
 //
 
-var client = module.client;
+var client = require('./bot.js');
 
-module.exports = function (controller, client) {
+module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
