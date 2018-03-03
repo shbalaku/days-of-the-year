@@ -13,12 +13,11 @@ module.exports = function (controller) {
         date = checkToday();
         [date_format1, date_format2] = format_date(date);
 
-        var results = [], output = [], bool;
+        var results = [];
 
         // look up date in cache table
-        [bool, output] = cacheLookup(date_format1);
-        if (bool) {
-          results = output;
+        results = cacheLookup(date_format1);
+        if (results.length > 0) {
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
           for (var i=0; i<results.length; i++){
@@ -140,15 +139,15 @@ function cacheLookup(date) {
     // execute query
     client.query('SELECT * FROM cache WHERE date = $1;', [date], function(err, res) {
       if (err) throw err;
+
+      var results = [];
       // process results
       var row_count = res.rows.length;
       if (row_count > 0) {
-        var results = res.rows[0].days;
-        return [true, results];
+        results = res.rows[0].days;
       }
-      else {
-        return [false, []];
-      }
+      console.log(results);
+      return results;
     });
   })
 }
