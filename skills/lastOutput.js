@@ -23,7 +23,6 @@ module.exports = function (controller) {
             output_list = output_list + '\n* ' + days[i];
           }
           bot.reply(message, output_list);
-          done();
         });
     });
 }
