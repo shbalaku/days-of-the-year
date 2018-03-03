@@ -4,12 +4,6 @@
 var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
-const { Client } = require('pg');
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
 
 module.exports = function (controller) {
 
@@ -43,6 +37,13 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
 
+              const { Client } = require('pg');
+
+              const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: true,
+              });
+              
               client.connect( function (err) {
                 if (err) throw err;
 

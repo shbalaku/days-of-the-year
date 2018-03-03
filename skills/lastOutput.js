@@ -2,17 +2,19 @@
 // Retrive last output functionality
 //
 
-// Establish client POSTGRESQL
-const { Client } = require('pg');
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+
 
 module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
+      // Establish client POSTGRESQL
+      const { Client } = require('pg');
+      const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+      });
+      
       client.connect(function(err) {
         if (err) throw err;
 
