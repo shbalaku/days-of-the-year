@@ -18,7 +18,7 @@ module.exports = function (controller) {
 
         // look up date in cache table
         output = cacheLookup(date_format1);
-        if (output != []) {
+        if (output) {
           var date_message = "**"+date_format1+"**";
           var output_list=date_message + '\n';
           for (var i=0; i<results.length; i++){
@@ -146,9 +146,11 @@ function cacheLookup(date) {
       var row_count = res.rows.length;
       if (row_count > 0) {
         results = res.rows[0].days;
+        return results;
       }
-      console.log(results);
-      return results;
+      else {
+        return false;
+      }
     });
   })
 }
