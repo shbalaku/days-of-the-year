@@ -18,7 +18,6 @@ module.exports = function (controller) {
 
         // execute query
         client.query('SELECT * FROM lastOutput;', function(err, res) {
-            if (err) console.log(err);
 
             console.log(res);
             // process results
