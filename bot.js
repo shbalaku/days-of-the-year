@@ -60,6 +60,13 @@ var controller = Botkit.sparkbot({
 var bot = controller.spawn({
 });
 
+// Establish client POSTGRESQL
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
 //
 // Launch bot
 //

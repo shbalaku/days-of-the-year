@@ -2,6 +2,8 @@
 // Retrive last output functionality
 //
 
+var client = module.client;
+
 module.exports = function (controller, client) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
