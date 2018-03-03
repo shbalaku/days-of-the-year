@@ -42,9 +42,22 @@ module.exports = function (controller) {
                 output_list = output_list + '\n* ' + results[i];
               }
               bot.reply(message, output_list);
-              client.connect();
-              client.query('DELETE FROM lastOutput;');
-              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results]);
+              client.connect( function (err) {
+                if (err) throw err;
+
+                // execute query
+                client.query('DELETE FROM lastOutput;', function(err) {
+                  if (err) throw err;
+                  // execute addition to table query
+                  client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
+                    if (err) throw err;
+                    // end connection
+                    client.end( function (err) {
+                      if (err) throw err;
+                    });
+                  });
+                });
+              });
             }
           }
         });
