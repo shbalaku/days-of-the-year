@@ -43,13 +43,8 @@ module.exports = function (controller) {
               }
               bot.reply(message, output_list);
 
-              const { Client } = require('pg');
+              var client = createClient();
 
-              const client = new Client({
-                connectionString: process.env.DATABASE_URL,
-                ssl: true,
-              });
-              
               client.connect( function (err) {
                 if (err) throw err;
 
@@ -113,4 +108,12 @@ function encodeTomorrow() {
   d = mon + "/" + day;
 
   return d;
+}
+
+function createClient() {
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
+  return client;
 }
