@@ -60,10 +60,6 @@ var controller = Botkit.sparkbot({
 var bot = controller.spawn({
 });
 
-var helloWorld = function() {
-  console.log("Hello World!");
-};
-module.exports = helloWorld;
 //
 // Launch bot
 //
