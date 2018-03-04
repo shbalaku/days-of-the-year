@@ -52,8 +52,7 @@ module.exports = function (controller) {
                 else {
                   // store last output
                   storeLastOutput(date_format1, results, function(client) {
-                    client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function(err) {
-                      if (err) throw err;
+                    storeInCache(client, date_format1, results, function() {
                       // end connection
                       client.end(function(err) {
                         if (err) throw err;
@@ -63,6 +62,7 @@ module.exports = function (controller) {
                         for (var i=0; i<results.length; i++){
                           output_list = output_list + '\n* ' + results[i];
                         }
+                        // bot reply
                         bot.reply(message, output_list);
                       });
                     });
@@ -166,5 +166,13 @@ function storeLastOutput(date, days, callback) {
         callback(client);
       });
     });
+  });
+}
+
+function storeInCache(client, date, days, callback) {
+  client.query('INSERT INTO cache VALUES ($1, $2);', [date, days], function(err) {
+    if (err) throw err;
+    // callback
+    callback();
   });
 }
