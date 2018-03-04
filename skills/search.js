@@ -130,7 +130,7 @@ function GetMatchAttributes(link, callback) {
       var _soup = new JSSoup(_html);
       var date = _soup.find('div', 'banner__title banner__title-small');
       var day_message = _soup.find('h1', 'banner__title');
-      var result = date.text + ' ' + day_message.text + "\n";
+      var result = date.text + ' ' + day_message.text + "\n ";
       callback(result);
     }
   });
