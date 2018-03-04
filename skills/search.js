@@ -3,7 +3,10 @@
 //
 var request = require('request');
 var JSSoup = require('jssoup').default;
-var fuzzy = require('fuzzy')
+var fuzzy = require('fuzzy');
+
+// global variables
+//var output = "";
 
 module.exports = function (controller) {
 
@@ -29,6 +32,7 @@ module.exports = function (controller) {
                 }
               }
               if (link != ''){
+                // exact match found
                 var result;
                 request(link, function(_err, _resp, _html) {
                   if (!_err){
@@ -57,7 +61,8 @@ module.exports = function (controller) {
 
                 // bot reply all matches found
                 if (matches.length > 0) {
-                  bot.reply(message, "**I found the following matching day(s):**\n\n");
+                  var output = "**I found the following matching day(s):**\n\n";
+                  //bot.reply(message, "**I found the following matching day(s):**\n\n");
                   for (var i = 0; i < matches.length; i++) {
                     link = days_list[i].nextElement.attrs.href;
                     var result;
@@ -66,8 +71,10 @@ module.exports = function (controller) {
                         var _soup = new JSSoup(_html);
                         var date = _soup.find('div', 'banner__title banner__title-small');
                         var day_message = _soup.find('h1', 'banner__title');
-                        result = date.text + ' ' + day_message.text;
-                        bot.reply(message, result);
+                        output = output + date.text + ' ' + day_message.text + '\n';
+                        if (i == matches.length - 1) {
+                          bot.reply(message, output);
+                        }
                       }
                     });
                   }
@@ -122,4 +129,22 @@ function convertString(phrase) {
     returnString = returnString.substring(0,maxLength);
 
     return returnString;
+}
+
+function iterateMatches(matches, days_list, callback) {
+  var link;
+  for (var i = 0; i < matches.length; i++) {
+    link = days_list[i].nextElement.attrs.href;
+    var result;
+    request(link, function(_err, _resp, _html) {
+      if (!_err){
+        var _soup = new JSSoup(_html);
+        var date = _soup.find('div', 'banner__title banner__title-small');
+        var day_message = _soup.find('h1', 'banner__title');
+        result = date.text + ' ' + day_message.text;
+        callback();
+        bot.reply(message, result);
+      }
+    });
+  }
 }
