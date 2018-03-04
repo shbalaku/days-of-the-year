@@ -5,9 +5,6 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var fuzzy = require('fuzzy');
 
-// global variables
-var output = "";
-
 module.exports = function (controller) {
 
     controller.hears('when is (.*)', 'direct_mention, direct_message', function (bot, message) {
@@ -62,12 +59,11 @@ module.exports = function (controller) {
                 // bot reply all matches found
                 var size = matches.length;
                 if (size > 0) {
-                  output = "**I found the following matching day(s):**\n\n";
-                  //bot.reply(message, "**I found the following matching day(s):**\n\n");
+                  bot.reply(message, "**I found the following matching day(s):**\n\n");
                   for (var i = 0; i < size; i++) {
                     link = days_list[i].nextElement.attrs.href;
-                    GetMatchAttributes(i, size, link, function(output) {
-                      bot.reply(message, output);
+                    GetMatchAttributes(link, function(result) {
+                      bot.reply(message, result);
                     });
                   }
                   /*
@@ -139,16 +135,14 @@ function convertString(phrase) {
     return returnString;
 }
 
-function GetMatchAttributes(index, size, link, callback) {
+function GetMatchAttributes(link, callback) {
   request(link, function(_err, _resp, _html) {
     if (!_err){
       var _soup = new JSSoup(_html);
       var date = _soup.find('div', 'banner__title banner__title-small');
       var day_message = _soup.find('h1', 'banner__title');
-      output = output + date.text + ' ' + day_message.text + "\n\n";
-      if (index == size - 1) {
-        callback(output);
-      }
+      var result = date.text + ' ' + day_message.text + "\n";
+      callback(result);
     }
   });
 }
