@@ -6,7 +6,7 @@ var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
 
-module.exports = function (controller) {
+module.exports = function (controller, helloWorld) {
 
     controller.hears('tomorrow', 'direct_mention, direct_message', function (bot, message) {
 
@@ -16,6 +16,7 @@ module.exports = function (controller) {
         // look up date in cache table
         cacheLookup(date_format1, function(res) {
           if (res != 0) {
+            console.log(helloWorld);
             console.log("Cache lookup successful");
             // store last output
             storeLastOutput(date_format1, res, function(client) {
