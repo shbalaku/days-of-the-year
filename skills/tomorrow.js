@@ -10,7 +10,7 @@ var another = require('../bot.js');
 module.exports = function (controller) {
 
     controller.hears('tomorrow', 'direct_mention, direct_message', function (bot, message) {
-        console.log(another.hello());
+        another();
         date = encodeTomorrow();
         [date_format1, date_format2] = format_date(date);
 
