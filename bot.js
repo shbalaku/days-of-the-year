@@ -64,7 +64,7 @@ var helloWorld = {};
 helloWorld.hello = function() {
   console.log("Hello World!");
 };
-exports.data = helloWorld;
+module.exports = helloWorld;
 //
 // Launch bot
 //
