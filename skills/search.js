@@ -57,13 +57,18 @@ module.exports = function (controller) {
                 }
 
                 // bot reply all matches found
+                var response = "**I found the following matching day(s):**\n\n";
                 var size = matches.length;
+                var completed_requests = 0;
                 if (size > 0) {
-                  bot.reply(message, "**I found the following matching day(s):**\n\n");
                   for (var i = 0; i < size; i++) {
                     link = days_list[i].nextElement.attrs.href;
                     GetMatchAttributes(link, function(result) {
-                      bot.reply(message, result);
+                      completed_requests++;
+                      response = response + result;
+                      if (completed_requests == size) {
+                        bot.reply(message, response);
+                      }
                     });
                   }
                 }
