@@ -59,29 +59,15 @@ module.exports = function (controller) {
                 // bot reply all matches found
                 var size = matches.length;
                 if (size > 0) {
-                  bot.reply(message, "**I found the following matching day(s):**\n\n");
                   for (var i = 0; i < size; i++) {
                     link = days_list[i].nextElement.attrs.href;
                     GetMatchAttributes(link, function(result) {
+                      if (i == 0){
+                        bot.reply(message, "**I found the following matching day(s):**\n\n");
+                      }
                       bot.reply(message, result);
                     });
                   }
-                  /*
-                  for (var i = 0; i < matches.length; i++) {
-                    link = days_list[i].nextElement.attrs.href;
-                    var result;
-                    request(link, function(_err, _resp, _html) {
-                      if (!_err){
-                        var _soup = new JSSoup(_html);
-                        var date = _soup.find('div', 'banner__title banner__title-small');
-                        var day_message = _soup.find('h1', 'banner__title');
-                        output = output + date.text + ' ' + day_message.text + '\n';
-                        if (i == matches.length - 1) {
-                          bot.reply(message, output);
-                        }
-                      }
-                    });
-                  }*/
                 }
                 else {
                   bot.reply(message, "It seems the day you've tried to search for could not be found.");
