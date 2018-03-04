@@ -29,8 +29,10 @@ module.exports = function (controller) {
               bot.reply(message, output_list);
             }
             else {
-              client.query('SELECT * FROM cache WHERE date = $1;', query, function(err, res) {
-                if (err) throw err;
+              client.query('SELECT * FROM cache WHERE date = $1;', [query], function(err, res) {
+                console.log(query);
+                console.log(res.rows);
+                console.log(res.rows.length);
                 var row_count = res.rows.length;
                 if (row_count > 0) {
                   var date = res.rows[0].date;
