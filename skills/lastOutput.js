@@ -3,13 +3,14 @@
 //
 
 const { Client } = require('pg');
+var methods = require('./methods.js');
 
 module.exports = function (controller) {
 
     controller.hears('last output', 'direct_mention, direct_message', function (bot, message) {
 
       // Establish client POSTGRESQL
-      var client = createClient();
+      var client = methods.createClient();
 
       client.connect(function(err) {
         if (err) throw err;
@@ -35,12 +36,4 @@ module.exports = function (controller) {
           });
         });
       });
-}
-
-function createClient() {
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-  });
-  return client;
 }
