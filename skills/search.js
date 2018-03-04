@@ -63,6 +63,7 @@ module.exports = function (controller) {
                 if (matches.length > 0) {
                   var output = "**I found the following matching day(s):**\n\n";
                   //bot.reply(message, "**I found the following matching day(s):**\n\n");
+                  console.log(matches.length);
                   for (var i = 0; i < matches.length; i++) {
                     link = days_list[i].nextElement.attrs.href;
                     var result;
@@ -72,6 +73,7 @@ module.exports = function (controller) {
                         var date = _soup.find('div', 'banner__title banner__title-small');
                         var day_message = _soup.find('h1', 'banner__title');
                         output = output + date.text + ' ' + day_message.text + '\n';
+                        console.log(i);
                         if (i == matches.length - 1) {
                           bot.reply(message, output);
                         }
