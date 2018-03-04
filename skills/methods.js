@@ -86,7 +86,7 @@ var methods = {
       callback();
     });
   },
-  processQuery: function (date) {
+  processQuery: function (date, bot, message) {
     [date1, date2] = methods.formatDate(date);
     // look up date in cache table
     methods.cacheLookup(date1, function(res) {
