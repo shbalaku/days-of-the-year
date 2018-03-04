@@ -2,7 +2,7 @@
 // Retrive cache functionality
 //
 
-var methods = require('./methods.js');
+var methods = require('./../methods.js');
 
 module.exports = function (controller) {
 

@@ -2,7 +2,7 @@
 // Yesterday functionality
 //
 var now = new Date();
-var methods = require('./methods.js');
+var methods = require('./../methods.js');
 
 module.exports = function (controller) {
 
