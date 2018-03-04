@@ -30,6 +30,7 @@ module.exports = function (controller) {
             }
             else {
               client.query('SELECT * FROM cache WHERE date = $1;', [query], function(err, res) {
+                if (err) throw err;
                 var row_count = res.rows.length;
                 if (row_count > 0) {
                   var date = res.rows[0].date;
