@@ -5,12 +5,12 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
-var another = require('../bot.js');
+var methods = require('methods.js');
 
 module.exports = function (controller) {
 
     controller.hears('tomorrow', 'direct_mention, direct_message', function (bot, message) {
-        another();
+        methods.helloWorld();
         date = encodeTomorrow();
         [date_format1, date_format2] = format_date(date);
 
