@@ -23,15 +23,20 @@ module.exports = function (controller) {
               output_list = output_list + '\n* ' + res[i];
             }
             // store last output
-            client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, res], function(err) {
+            var client = createClient();
+            client.connect( function(err) {
               if (err) throw err;
-              // end Client
-              client.end(function(err) {
+              // execute query
+              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, res], function(err) {
                 if (err) throw err;
-                // bot reply
-                bot.reply(message, output_list);
+                // end Client
+                client.end(function(err) {
+                  if (err) throw err;
+                  // bot reply
+                  bot.reply(message, output_list);
+                });
               });
-            });            
+            });        
           }
           else {
             var results = [];
