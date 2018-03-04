@@ -59,12 +59,10 @@ module.exports = function (controller) {
                 // bot reply all matches found
                 var size = matches.length;
                 if (size > 0) {
+                  bot.reply(message, "**I found the following matching day(s):**\n\n");
                   for (var i = 0; i < size; i++) {
                     link = days_list[i].nextElement.attrs.href;
                     GetMatchAttributes(link, function(result) {
-                      if (i == 0){
-                        bot.reply(message, "**I found the following matching day(s):**\n\n");
-                      }
                       bot.reply(message, result);
                     });
                   }
