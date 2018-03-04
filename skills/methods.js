@@ -3,3 +3,5 @@ var methods = {
     console.log("Hello World!");
   }
 };
+
+module.exports = methods;
