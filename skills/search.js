@@ -145,7 +145,7 @@ function GetMatchAttributes(index, size, link, callback) {
       var _soup = new JSSoup(_html);
       var date = _soup.find('div', 'banner__title banner__title-small');
       var day_message = _soup.find('h1', 'banner__title');
-      output = output + date.text + ' ' + day_message.text + '\n';
+      output = output + date.text + ' ' + day_message.text + "\n\n";
       if (index == size - 1) {
         callback(output);
       }
