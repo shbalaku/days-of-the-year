@@ -2,7 +2,6 @@
 // Retrive last output functionality
 //
 
-const { Client } = require('pg');
 var methods = require('./methods.js');
 
 module.exports = function (controller) {
