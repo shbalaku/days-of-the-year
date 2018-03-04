@@ -10,7 +10,7 @@ module.exports = function (controller) {
 
     controller.hears('today', 'direct_mention, direct_message', function (bot, message) {
 
-        date = checkToday();
+        date = encodeToday();
         [date_format1, date_format2] = methods.formatDate(date);
 
         // look up date in cache table
@@ -75,7 +75,7 @@ module.exports = function (controller) {
     });
 }
 
-function checkToday() {
+function encodeToday() {
   var d;
   if (now.getMonth()+1<10)
       mon = '0'+(now.getMonth()+1).toString();
