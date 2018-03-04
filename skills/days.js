@@ -21,13 +21,22 @@ module.exports = function (controller) {
 
           cacheLookup(date_format1, function(res) {
             if (res != 0) {
+              console.log("Cache lookup successful");
               var date_message = "**"+date_format1+"**";
               var output_list=date_message + '\n';
               for (var i=0; i<res.length; i++){
                 output_list = output_list + '\n* ' + res[i];
               }
-              bot.reply(message, output_list);
-              console.log("Cache lookup successful");
+              // store last output
+              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, res], function(err) {
+                if (err) throw err;
+                // end Client
+                client.end(function(err) {
+                  if (err) throw err;
+                  // bot reply
+                  bot.reply(message, output_list);
+                });
+              });
             }
             else {
               console.log("Cache lookup unsuccessful");
