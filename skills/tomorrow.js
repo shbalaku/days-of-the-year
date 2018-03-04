@@ -5,18 +5,18 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
+var another = require('./bot.js');
 
-module.exports = function (controller, helloWorld) {
+module.exports = function (controller) {
 
     controller.hears('tomorrow', 'direct_mention, direct_message', function (bot, message) {
-
+        console.log(another)
         date = encodeTomorrow();
         [date_format1, date_format2] = format_date(date);
 
         // look up date in cache table
         cacheLookup(date_format1, function(res) {
           if (res != 0) {
-            console.log(helloWorld);
             console.log("Cache lookup successful");
             // store last output
             storeLastOutput(date_format1, res, function(client) {
