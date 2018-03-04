@@ -17,24 +17,16 @@ module.exports = function (controller) {
         cacheLookup(date_format1, function(res) {
           if (res != 0) {
             console.log("Cache lookup successful");
-            var date_message = "**"+date_format1+"**";
-            var output_list=date_message + '\n';
-            for (var i=0; i<res.length; i++){
-              output_list = output_list + '\n* ' + res[i];
-            }
             // store last output
-            var client = createClient();
-            client.connect( function(err) {
-              if (err) throw err;
-              // execute query
-              client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, res], function(err) {
+            storeLastOutput(date_format1, res, function(client) {
+              client.end(function(err) {
                 if (err) throw err;
-                // end Client
-                client.end(function(err) {
-                  if (err) throw err;
-                  // bot reply
-                  bot.reply(message, output_list);
-                });
+                var date_message = "**"+date_format1+"**";
+                var output_list=date_message + '\n';
+                for (var i=0; i<res.length; i++){
+                  output_list = output_list + '\n* ' + res[i];
+                }
+                bot.reply(message, output_list);
               });
             });
           }
@@ -59,33 +51,20 @@ module.exports = function (controller) {
                 if (results.length == 0)
                   bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
                 else {
-                  // results is an array consisting of messages collected during execution
-                  var date_message = "**"+date_format1+"**";
-                  var output_list=date_message + '\n';
-                  for (var i=0; i<results.length; i++){
-                    output_list = output_list + '\n* ' + results[i];
-                  }
-                  bot.reply(message, output_list);
-
-                  var client = createClient();
-
-                  client.connect( function (err) {
-                    if (err) throw err;
-
-                    // execute query
-                    client.query('DELETE FROM lastOutput;', function(err) {
-                      if (err) throw err;
-                      // execute addition to table query
-                      client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date_format1, results], function (err) {
+                  // store last output
+                  storeLastOutput(date_format1, results, function(client) {
+                    storeInCache(client, date_format1, results, function() {
+                      // end connection
+                      client.end(function(err) {
                         if (err) throw err;
-                        // execute cache insertion query
-                        client.query('INSERT INTO cache VALUES ($1, $2);', [date_format1, results], function (err) {
-                          if (err) throw err;
-                          // end connection
-                          client.end( function (err) {
-                            if (err) throw err;
-                          });
-                        });
+                        // results is an array consisting of messages collected during execution
+                        var date_message = "**"+date_format1+"**";
+                        var output_list=date_message + '\n';
+                        for (var i=0; i<results.length; i++){
+                          output_list = output_list + '\n* ' + results[i];
+                        }
+                        // bot reply
+                        bot.reply(message, output_list);
                       });
                     });
                   });
@@ -172,5 +151,32 @@ function cacheLookup(date, callback) {
         if(err) throw err;
       });
     });
+  });
+}
+
+function storeLastOutput(date, days, callback) {
+  var client = createClient();
+
+  client.connect( function(err) {
+    if (err) throw err;
+
+    // delete last output entries
+    client.query('DELETE FROM lastOutput;', function(err) {
+      if (err) throw err;
+      // enter new entry
+      client.query('INSERT INTO lastOutput VALUES ($1, $2);', [date, days], function(err) {
+        if (err) throw err;
+        // call callback function
+        callback(client);
+      });
+    });
+  });
+}
+
+function storeInCache(client, date, days, callback) {
+  client.query('INSERT INTO cache VALUES ($1, $2);', [date, days], function(err) {
+    if (err) throw err;
+    // callback
+    callback();
   });
 }
