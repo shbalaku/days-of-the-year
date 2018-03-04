@@ -26,13 +26,14 @@ module.exports = function (controller) {
             if (row_count > 0) {
               var date = res.rows[0].date;
               var output_list = query + " is celebrated on " + "**"+date+"**";
-              bot.reply(message, output_list);
+              // end connection
+              client.end(function(err) {
+                if (err) throw err;
+                bot.reply(message, output_list);
+              });
             }
             else {
               client.query('SELECT * FROM cache WHERE date = $1;', [query], function(err, res) {
-                console.log(query);
-                console.log(res.rows);
-                console.log(res.rows.length);
                 var row_count = res.rows.length;
                 if (row_count > 0) {
                   var date = res.rows[0].date;
@@ -42,21 +43,21 @@ module.exports = function (controller) {
                   for (var i=0; i<days.length; i++){
                     output_list = output_list + '\n* ' + days[i];
                   }
-                  bot.reply(message, output_list);
+                  // end connection
+                  client.end(function(err) {
+                    if (err) throw err;
+                    bot.reply(message, output_list);
+                  });
                 }
                 else {
-                  bot.reply(message, "It seems the day you've tried to search for could not be found in the cache.");
+                  // end connection
+                  client.end(function(err) {
+                    if (err) throw err;
+                    bot.reply(message, "It seems the day you've tried to search for could not be found in the cache.");
+                  });
                 }
-                // end connection
-                client.end(function(err) {
-                  if (err) throw err;
-                });
               });
             }
-            // end connection
-            client.end(function(err) {
-              if (err) throw err;
-            });
           });
         });
       });
