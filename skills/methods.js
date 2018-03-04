@@ -33,7 +33,7 @@ var methods = {
     return client;
   },
   cacheLookup: function (date, callback) {
-    var client = createClient();
+    var client = methods.createClient();
 
     client.connect( function(err) {
       if (err) throw err;
@@ -59,7 +59,7 @@ var methods = {
     });
   },
   storeLastOutput: function (date, days, callback) {
-    var client = createClient();
+    var client = methods.createClient();
 
     client.connect( function(err) {
       if (err) throw err;
