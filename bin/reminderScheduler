@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+var now = new Date();
+var methods = require('./../methods.js');
+
+var client = methods.createClient();
+
+var Botkit = require('botkit');
+
+var controller = Botkit.sparkbot({
+    public_address: process.env.public_address,
+    ciscospark_access_token: process.env.access_token,
+    secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
+});
+
+var bot = controller.spawn();
+
+var d = encodeToday();
+var date = methods.formatDate(d);
+
+client.connect(function(err) {
+  if (err) throw err;
+
+  client.query('SELECT * FROM reminders WHERE remind_on = $1;', [date], function(err, res){
+    if (err) throw err;
+    client.end(function(err){
+      if (err) throw err;
+      var len = res.rows.length;
+      if(len > 0) {
+        for (var i = 0; i < len; i++) {
+          var personId = res.rows[i].person_id;
+          var day = res.rows[i].day;
+          var message = {
+            user: personId
+          };
+          bot.startPrivateConversation(message, function(err, convo) {
+            var text = "It is " + day + " today!";
+            convo.say(text);
+          });
+        }
+      }
+    });
+  });
+});
+
+function encodeToday() {
+  var d;
+  if (now.getMonth()+1<10)
+      mon = '0'+(now.getMonth()+1).toString();
+  else
+      mon = (now.getMonth()+1).toString();
+  if (now.getDate()<10)
+      day = '0'+now.getDate().toString();
+  else
+      day = now.getDate().toString();
+  d = mon + "/" + day;
+
+  return d;
+}
