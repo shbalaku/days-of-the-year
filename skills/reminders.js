@@ -14,7 +14,7 @@ module.exports = function (controller) {
         var email = message.raw_message.data.personEmail;
         console.log(email);
 
-        searchDay(query, function(day) {
+        searchDay(query, bot, message, function(day) {
           console.log(day);
           /*
           var client = methods.createClient();
@@ -31,7 +31,7 @@ module.exports = function (controller) {
     });
 }
 
-function searchDay(query, callback) {
+function searchDay(query, bot, message, callback) {
   var query_encode = encodeURI(query);
   var uri_str = 'https://www.daysoftheyear.com/search/'+query_encode+'/';
   // request html of day page
