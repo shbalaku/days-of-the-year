@@ -2,7 +2,7 @@
 
 var methods = require('./../methods.js');
 
-var client = createClient();
+var client = methods.createClient();
 
 client.connect(function(err) {
   if (err) throw err;
