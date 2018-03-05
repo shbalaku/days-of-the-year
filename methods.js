@@ -181,7 +181,8 @@ var methods = {
         ciscospark_access_token: process.env.SPARK_TOKEN,
         secret: process.env.SECRET // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
     });
-    var bot = controller.spawn();
+    var bot = controller.spawn({
+    });
     return bot;
   }
 };
