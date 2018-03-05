@@ -2,6 +2,7 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
+var Botkit = require('botkit');
 
 var methods = {
   formatDate: function (date){
@@ -173,6 +174,15 @@ var methods = {
       returnString = returnString.substring(0,maxLength);
 
       return returnString;
+  },
+  createBot: function() {
+    var controller = Botkit.sparkbot({
+        public_address: process.env.public_address,
+        ciscospark_access_token: process.env.access_token,
+        secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
+    });
+    var bot = controller.spawn();
+    return bot;
   }
 };
 
