@@ -177,9 +177,9 @@ var methods = {
   },
   createBot: function() {
     var controller = Botkit.sparkbot({
-        public_address: process.env.public_address,
-        ciscospark_access_token: process.env.access_token,
-        secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
+        public_address: process.env.PUBLIC_URL,
+        ciscospark_access_token: process.env.SPARK_TOKEN,
+        secret: process.env.SECRET // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
     });
     var bot = controller.spawn();
     return bot;
