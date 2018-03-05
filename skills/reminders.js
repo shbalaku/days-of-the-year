@@ -45,7 +45,7 @@ function searchDay(query, bot, message, callback) {
         for (var i = 0; i < days_list.length; i++) {
           var res = methods.convertString(days_list[i].text).toUpperCase();
           if (res == match){
-            date = days_list[i].text;
+            date = days_list[i];
             break;
           }
         }
