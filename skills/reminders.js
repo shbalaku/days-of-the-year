@@ -12,11 +12,8 @@ module.exports = function (controller) {
         var query = message.match[1];
         var personId = message.raw_message.actorId;
         var email = message.raw_message.data.personEmail;
-        console.log(email);
 
         searchDay(query, bot, message, function(day) {
-          console.log(day);
-          /*
           var client = methods.createClient();
           client.connect(function(err) {
             if (err) throw err;
@@ -26,7 +23,7 @@ module.exports = function (controller) {
                 if (err) throw err;
               });
             });
-          });*/
+          });
         });
     });
 }
@@ -52,16 +49,7 @@ function searchDay(query, bot, message, callback) {
         }
         if (date != ''){
           // exact match found
-          //var result;
           callback(date.trim());
-          /*
-          request(link, function(_err, _resp, _html) {
-            if (!_err){
-              var _soup = new JSSoup(_html);
-              var date = _soup.find('div', 'banner__title banner__title-small');
-              callback(date.text);
-            }
-          });*/
         }
         else {
           // no exact match found so retrieve first similar result from search - to be added
