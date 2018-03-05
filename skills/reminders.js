@@ -53,7 +53,7 @@ function searchDay(query, bot, message, callback) {
         if (date != ''){
           // exact match found
           //var result;
-          callback(date);
+          callback(date.trim());
           /*
           request(link, function(_err, _resp, _html) {
             if (!_err){
