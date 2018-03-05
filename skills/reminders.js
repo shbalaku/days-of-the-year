@@ -41,24 +41,26 @@ function searchDay(query, callback) {
       var soup = new JSSoup(html);
       var days_list = soup.findAll('h3', 'card-title');
       if (days_list.length > 0){
-        var link = '';
+        var date = '';
         for (var i = 0; i < days_list.length; i++) {
           var res = methods.convertString(days_list[i].text).toUpperCase();
           if (res == match){
-            link = days_list[i].nextElement.attrs.href;
+            date = days_list[i].text;
             break;
           }
         }
-        if (link != ''){
+        if (date != ''){
           // exact match found
-          var result;
+          //var result;
+          callback(date);
+          /*
           request(link, function(_err, _resp, _html) {
             if (!_err){
               var _soup = new JSSoup(_html);
               var date = _soup.find('div', 'banner__title banner__title-small');
               callback(date.text);
             }
-          });
+          });*/
         }
         else {
           // no exact match found so retrieve first similar result from search - to be added
