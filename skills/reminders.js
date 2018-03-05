@@ -2,6 +2,8 @@
 // Reminders functionality
 //
 
+var request = require('request');
+var JSSoup = require('jssoup').default;
 var methods = require('./../methods.js');
 
 module.exports = function (controller) {
