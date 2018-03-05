@@ -39,7 +39,7 @@ function searchDay(query, callback) {
     if (!err){
       var match = query.toUpperCase();
       var soup = new JSSoup(html);
-      var days_list = soup.findAll('h3', 'card-title');
+      var days_list = soup.findAll('h4', 'card-title-secondary');
       if (days_list.length > 0){
         var date = '';
         for (var i = 0; i < days_list.length; i++) {
