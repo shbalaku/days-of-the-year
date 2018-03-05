@@ -21,6 +21,8 @@ module.exports = function (controller) {
               if (err) throw err;
               client.end(function(err) {
                 if (err) throw err;
+                var text = "You will be reminded about " + query + " on " + day + ".";
+                bot.reply(message, text);
               });
             });
           });
