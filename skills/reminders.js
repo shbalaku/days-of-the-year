@@ -39,13 +39,14 @@ function searchDay(query, bot, message, callback) {
     if (!err){
       var match = query.toUpperCase();
       var soup = new JSSoup(html);
-      var days_list = soup.findAll('h4', 'card-title-secondary');
+      var days_list = soup.findAll('h3', 'card-title');
+      var date_list = soup.findAll('h4', 'card-title-secondary');
       if (days_list.length > 0){
         var date = '';
         for (var i = 0; i < days_list.length; i++) {
           var res = methods.convertString(days_list[i].text).toUpperCase();
           if (res == match){
-            date = days_list[i];
+            date = date_list[i].text;
             break;
           }
         }
