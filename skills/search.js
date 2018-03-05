@@ -4,6 +4,7 @@
 var request = require('request');
 var JSSoup = require('jssoup').default;
 var fuzzy = require('fuzzy');
+var methods = require('./../methods.js');
 
 module.exports = function (controller) {
 
@@ -22,7 +23,7 @@ module.exports = function (controller) {
             if (days_list.length > 0){
               var link = '';
               for (var i = 0; i < days_list.length; i++) {
-                var res = convertString(days_list[i].text).toUpperCase();
+                var res = methods.convertString(days_list[i].text).toUpperCase();
                 if (res == match){
                   link = days_list[i].nextElement.attrs.href;
                   break;
@@ -96,32 +97,6 @@ function pageSearch(uri) {
       return search_res;
     }
   });
-}
-
-function convertString(phrase) {
-    var maxLength = 100;
-
-    var returnString = phrase.toLowerCase();
-    //Convert Characters
-    returnString = returnString.replace(/ö/g, 'o');
-    returnString = returnString.replace(/ç/g, 'c');
-    returnString = returnString.replace(/ş/g, 's');
-    returnString = returnString.replace(/ı/g, 'i');
-    returnString = returnString.replace(/ğ/g, 'g');
-    returnString = returnString.replace(/ü/g, 'u');
-    returnString = returnString.replace(/ñ/g, 'n');
-
-    // if there are other invalid chars, convert them into blank spaces
-    returnString = returnString.replace(/[^a-z0-9\s-]/g, "");
-    // convert multiple spaces and hyphens into one space
-    returnString = returnString.replace(/[\s-]+/g, " ");
-    // trims current string
-    returnString = returnString.replace(/^\s+|\s+$/g,"");
-    // cuts string (if too long)
-    if(returnString.length > maxLength)
-    returnString = returnString.substring(0,maxLength);
-
-    return returnString;
 }
 
 function GetMatchAttributes(link, callback) {
