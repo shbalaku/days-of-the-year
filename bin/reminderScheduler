@@ -15,7 +15,9 @@ client.connect(function(err) {
     if (err) throw err;
     client.end(function(err){
       if (err) throw err;
+      console.log(res.rows);
       var len = res.rows.length;
+      console.log(len);
       if(len > 0) {
         for (var i = 0; i < len; i++) {
           var personId = res.rows[i].person_id;
