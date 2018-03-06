@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 var now = new Date();
+var CiscoSpark = require('node-ciscospark');
+var spark = new CiscoSpark(process.env.SPARK_TOKEN);
 var methods = require('./../methods.js');
 
 var client = methods.createClient();
@@ -22,10 +24,18 @@ client.connect(function(err) {
       if(len > 0) {
         for (var i = 0; i < len; i++) {
           var email = res.rows[i].email;
-          var personId = res.rows[i].person_id;
+          var person_id = res.rows[i].person_id;
           var day = res.rows[i].day;
-          var text = "@" + email + " it is " + day + " today!";
-          console.log(text);
+          var text = "It is " + day + " today!";
+
+          spark.messages.create({
+            toPersonId: person_id,
+            text: text;
+          }, function (err, result) {
+            if (err) console.error(err);
+            console.log(result);
+          });
+          /*
           var message = {
             user: personId
           };
@@ -37,7 +47,7 @@ client.connect(function(err) {
               console.log(text);
               convo.say(text);
             });
-          });
+          });*/
         }
       }
     });
