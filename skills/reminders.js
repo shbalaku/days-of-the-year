@@ -92,7 +92,7 @@ function searchDay(query, bot, message, callback) {
                 var _soup = new JSSoup(_html);
                 var date = date_list[0].contents[0].nextElement.nextElement._text;
                 var day = days_list[0].text;
-                console.log(date);
+                console.log(day);
                 callback(date.trim(),day);
               }
             });
