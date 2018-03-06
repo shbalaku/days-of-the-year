@@ -10,17 +10,17 @@ module.exports = function (controller) {
 
     controller.hears('remind (.*)', 'direct_mention, direct_message', function (bot, message) {
         var query = message.match[1];
-        var personId = message.raw_message.actorId;
+        //var personId = message.raw_message.actorId;
         var email = message.raw_message.data.personEmail;
 
         searchDay(query, bot, message, function(day) {
           var client = methods.createClient();
           client.connect(function(err) {
             if (err) throw err;
-            client.query('SELECT * FROM reminders WHERE person_id = $1 AND day = $2;', [personId, query], function(err, res) {
+            client.query('SELECT * FROM reminders WHERE email = $1 AND day = $2;', [email, query], function(err, res) {
               if (err) throw err;
               if (res.rows.length == 0){
-                client.query('INSERT INTO reminders VALUES ($1, $2, $3, $4);', [email, personId, day, query], function(err) {
+                client.query('INSERT INTO reminders VALUES ($1, $2, $3);', [email, day, query], function(err) {
                   if (err) throw err;
                   client.end(function(err) {
                     if (err) throw err;
