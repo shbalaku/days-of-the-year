@@ -21,11 +21,15 @@ client.connect(function(err) {
       console.log(len);
       if(len > 0) {
         for (var i = 0; i < len; i++) {
+          var email = res.rows[i].email;
           var personId = res.rows[i].person_id;
           var day = res.rows[i].day;
-          var message = {
+          var text = "@" + email + " it is " + day + " today!";
+          console.log(text);
+          /*var message = {
             user: personId
           };
+
           methods.createBot(function(bot){
             console.log(message);
             bot.startPrivateConversation(message, function(err, convo) {
@@ -33,7 +37,7 @@ client.connect(function(err) {
               console.log(text);
               convo.say(text);
             });
-          });
+          });*/
         }
       }
     });
