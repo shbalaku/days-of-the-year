@@ -2,7 +2,7 @@
 
 var CiscoSpark = require('node-ciscospark');
 var spark = new CiscoSpark(process.env.SPARK_TOKEN);
-var methods = require('./../methods.js');
+var methods = require('./methods.js');
 
 var client = methods.createClient();
 
