@@ -85,18 +85,9 @@ function searchDay(query, bot, message, callback) {
               break;
           }
           if (matches.length > 0) {
-            var match = matches[0];
-            console.log(date_list[0].nextElement.nextElement._text;);
-            link = days_list[0].nextElement.attrs.href;
-            request(link, function(_err, _resp, _html) {
-              if (!_err){
-                var _soup = new JSSoup(_html);
-                var date = date_list[0].contents[0].nextElement.nextElement._text;
-                var day = days_list[0].text;
-                console.log(day);
-                callback(date.trim(),match);
-              }
-            });
+            var day = matches[0];
+            var date = date_list[0].nextElement.nextElement._text;
+            callback(date,day);
           }
           else {
             bot.reply(message, "It seems the day you've tried to search for could not be found.");
