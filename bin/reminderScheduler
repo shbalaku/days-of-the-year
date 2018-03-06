@@ -30,7 +30,7 @@ client.connect(function(err) {
 
           spark.messages.create({
             toPersonId: person_id,
-            text: text;
+            text: text
           }, function (err, result) {
             if (err) console.error(err);
             console.log(result);
