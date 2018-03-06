@@ -13,18 +13,18 @@ module.exports = function (controller) {
         //var personId = message.raw_message.actorId;
         var email = message.raw_message.data.personEmail;
 
-        searchDay(query, bot, message, function(day) {
+        searchDay(query, bot, message, function(date, day) {
           var client = methods.createClient();
           client.connect(function(err) {
             if (err) throw err;
-            client.query('SELECT * FROM reminders WHERE email = $1 AND day = $2;', [email, query], function(err, res) {
+            client.query('SELECT * FROM reminders WHERE email = $1 AND day = $2;', [email, day], function(err, res) {
               if (err) throw err;
               if (res.rows.length == 0){
-                client.query('INSERT INTO reminders VALUES ($1, $2, $3);', [email, day, query], function(err) {
+                client.query('INSERT INTO reminders VALUES ($1, $2, $3);', [email, date, day], function(err) {
                   if (err) throw err;
                   client.end(function(err) {
                     if (err) throw err;
-                    var text = "You will be reminded about " + query + " on " + day + ".";
+                    var text = "You will be reminded about " + day + " on " + date + ".";
                     bot.reply(message, text);
                   });
                 });
@@ -32,7 +32,7 @@ module.exports = function (controller) {
               else {
                 client.end(function(err) {
                   if (err) throw err;
-                  var text = "You already have a reminder set for " + query + " on " + day + ".";
+                  var text = "You already have a reminder set for " + day + " on " + date + ".";
                   bot.reply(message, text);
                 });
               }
@@ -54,16 +54,18 @@ function searchDay(query, bot, message, callback) {
       var date_list = soup.findAll('h4', 'card-title-secondary');
       if (days_list.length > 0){
         var date = '';
+        var day;
         for (var i = 0; i < days_list.length; i++) {
           var res = methods.convertString(days_list[i].text).toUpperCase();
           if (res == match){
             date = date_list[i].contents[0].nextElement.nextElement._text;
+            day = days_list[i].text;
             break;
           }
         }
         if (date != ''){
           // exact match found
-          callback(date.trim());
+          callback(date.trim(), day);
         }
         else {
           // no exact match found so retrieve first similar result from search - to be added
