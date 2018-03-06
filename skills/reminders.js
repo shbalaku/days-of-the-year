@@ -15,8 +15,6 @@ module.exports = function (controller) {
         var email = message.raw_message.data.personEmail;
 
         searchDay(query, bot, message, function(date, day) {
-          console.log(date);
-          console.log(day);
           var client = methods.createClient();
           client.connect(function(err) {
             if (err) throw err;
