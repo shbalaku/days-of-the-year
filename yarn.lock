@@ -1665,6 +1665,12 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+node-ciscospark@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/node-ciscospark/-/node-ciscospark-1.0.3.tgz#da99fa30efbbdf5c11f3758839adbdf17b9593e7"
+  dependencies:
+    request "^2.83.0"
+
 node-env-file@0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/node-env-file/-/node-env-file-0.1.8.tgz#fccb7b050f735b5a33da9eb937cf6f1ab457fb69"
@@ -2044,7 +2050,7 @@ request@2.81.0, request@^2.67.0, request@^2.69.0, request@^2.74.0, request@^2.81
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@^2.55.0:
+request@^2.55.0, request@^2.83.0:
   version "2.83.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
   dependencies:
