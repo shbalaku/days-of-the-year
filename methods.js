@@ -175,7 +175,7 @@ var methods = {
 
       return returnString;
   },
-  createBot: function() {
+  createBot: function(callback) {
     var controller = Botkit.sparkbot({
         public_address: process.env.PUBLIC_URL,
         ciscospark_access_token: process.env.SPARK_TOKEN,
@@ -183,7 +183,7 @@ var methods = {
     });
     var bot = controller.spawn({
     });
-    return bot;
+    callback(bot);
   }
 };
 

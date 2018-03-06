@@ -5,8 +5,6 @@ var methods = require('./../methods.js');
 
 var client = methods.createClient();
 
-var bot = methods.createBot();
-
 var d = encodeToday();
 var date = methods.formatDate(d);
 
@@ -25,9 +23,11 @@ client.connect(function(err) {
           var message = {
             user: personId
           };
-          bot.startPrivateConversation(message, function(err, convo) {
-            var text = "It is " + day + " today!";
-            convo.say(text);
+          methods.createBot(function(bot){
+            bot.startPrivateConversation(message, function(err, convo) {
+              var text = "It is " + day + " today!";
+              convo.say(text);
+            });
           });
         }
       }
