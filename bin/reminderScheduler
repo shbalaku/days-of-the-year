@@ -24,8 +24,10 @@ client.connect(function(err) {
             user: personId
           };
           methods.createBot(function(bot){
+            console.log(message);
             bot.startPrivateConversation(message, function(err, convo) {
               var text = "It is " + day + " today!";
+              console.log(text);
               convo.say(text);
             });
           });
