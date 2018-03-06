@@ -14,7 +14,6 @@ module.exports = function (controller) {
         text += "\n- " + bot.appendMention(message, "when is <day>") + ": ask when <day> is";
         text += "\n- " + bot.appendMention(message, "remind <day>") + ": ask to remind you of <day>";
         text += "\n\nI also understand:";
-        text += "\n- " + bot.appendMention(message, "about") + ": shows metadata about myself";
         text += "\n- " + bot.appendMention(message, "help") + ": spreads the word about my skills";
         bot.reply(message, text);
     });

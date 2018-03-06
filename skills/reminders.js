@@ -4,6 +4,7 @@
 
 var request = require('request');
 var JSSoup = require('jssoup').default;
+var fuzzy = require('fuzzy');
 var methods = require('./../methods.js');
 
 module.exports = function (controller) {
@@ -69,7 +70,33 @@ function searchDay(query, bot, message, callback) {
         }
         else {
           // no exact match found so retrieve first similar result from search - to be added
-          bot.reply(message, "It seems the day you've tried to search for could not be found.");
+          var query_split = query.split(" ");
+          var list = [];
+          for (var i = 0; i < days_list.length; i++) {
+            list[i] = days_list[i].text;
+          }
+          for (var i = 0; i < query_split.length - 1; i++) {
+            var word_i = query_split[i];
+            var results = fuzzy.filter(word_i, list);
+            var matches = results.map(function(el) { return el.string; });
+            if (matches != [])
+              break;
+          }
+          if (matches.length > 0) {
+            var match = matches[0];
+            link = days_list[0].nextElement.attrs.href;
+            request(link, function(_err, _resp, _html) {
+              if (!_err){
+                var _soup = new JSSoup(_html);
+                var date = date_list[0].contents[0].nextElement.nextElement._text;
+                var day = days_list[0].text;
+                callback(date.trim(),day);
+              }
+            });
+          }
+          else {
+            bot.reply(message, "It seems the day you've tried to search for could not be found.");
+          }
         }
       }
       else{
