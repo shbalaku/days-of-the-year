@@ -186,6 +186,20 @@ var methods = {
     var bot = controller.spawn({
     });
     callback(bot);
+  },
+  encodeToday: function() {
+    var d;
+    if (now.getMonth()+1<10)
+        mon = '0'+(now.getMonth()+1).toString();
+    else
+        mon = (now.getMonth()+1).toString();
+    if (now.getDate()<10)
+        day = '0'+now.getDate().toString();
+    else
+        day = now.getDate().toString();
+    d = mon + "/" + day;
+
+    return d;
   }
 };
 
