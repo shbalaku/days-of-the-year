@@ -86,6 +86,7 @@ function searchDay(query, bot, message, callback) {
           }
           if (matches.length > 0) {
             var day = matches[0];
+            console.log(date_list[0]);
             var date = date_list[0].nextElement.nextElement._text;
             callback(date,day);
           }
