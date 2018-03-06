@@ -86,7 +86,7 @@ function searchDay(query, bot, message, callback) {
           }
           if (matches.length > 0) {
             var match = matches[0];
-            console.log(match);
+            console.log(days_list[0]);
             link = days_list[0].nextElement.attrs.href;
             request(link, function(_err, _resp, _html) {
               if (!_err){
@@ -94,7 +94,7 @@ function searchDay(query, bot, message, callback) {
                 var date = date_list[0].contents[0].nextElement.nextElement._text;
                 var day = days_list[0].text;
                 console.log(day);
-                callback(date.trim(),day);
+                callback(date.trim(),match);
               }
             });
           }
