@@ -176,6 +176,7 @@ var methods = {
       return returnString;
   },
   createBot: function(callback) {
+    var env = process.env.NODE_ENV || "development";
     var controller = Botkit.sparkbot({
         public_address: process.env.PUBLIC_URL,
         ciscospark_access_token: process.env.SPARK_TOKEN,
