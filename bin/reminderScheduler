@@ -26,7 +26,7 @@ client.connect(function(err) {
           var day = res.rows[i].day;
           var text = "@" + email + " it is " + day + " today!";
           console.log(text);
-          /*var message = {
+          var message = {
             user: personId
           };
 
@@ -37,7 +37,7 @@ client.connect(function(err) {
               console.log(text);
               convo.say(text);
             });
-          });*/
+          });
         }
       }
     });
