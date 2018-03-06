@@ -11,6 +11,7 @@ var date = methods.formatDate(d);
 
 client.connect(function(err) {
   if (err) throw err;
+  console.log('%'+date[0]+'%');
   client.query('SELECT * FROM reminders WHERE (remind_on LIKE $1) OR (remind_on LIKE $2);', ['%'+date[0]+'%', '%'+date[1]+'%'], function(err, res){
     if (err) throw err;
     client.end(function(err){
