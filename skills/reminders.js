@@ -17,13 +17,25 @@ module.exports = function (controller) {
           var client = methods.createClient();
           client.connect(function(err) {
             if (err) throw err;
-            client.query('INSERT INTO reminders VALUES ($1, $2, $3, $4);', [email, personId, day, query], function(err) {
+            client.query('SELECT * FROM reminders WHERE person_id = $1 AND day = $2;', [personId, query], function(err, res) {
               if (err) throw err;
-              client.end(function(err) {
-                if (err) throw err;
-                var text = "You will be reminded about " + query + " on " + day + ".";
-                bot.reply(message, text);
-              });
+              if (res.rows.length == 0){
+                client.query('INSERT INTO reminders VALUES ($1, $2, $3, $4);', [email, personId, day, query], function(err) {
+                  if (err) throw err;
+                  client.end(function(err) {
+                    if (err) throw err;
+                    var text = "You will be reminded about " + query + " on " + day + ".";
+                    bot.reply(message, text);
+                  });
+                });
+              }
+              else {
+                client.end(function(err) {
+                  if (err) throw err;
+                  var text = "You already have a reminder set for " + query + " on " + day + ".";
+                  bot.reply(message, text);
+                });
+              }
             });
           });
         });
