@@ -4,8 +4,6 @@
 module.exports = function (controller) {
 
     controller.hears('help', 'direct_message,direct_mention', function (bot, message) {
-        var text = '**Help**\n* Format of command: <dd><mm>\n* Example: 01/17';
-        bot.reply(message, text);
         var text = "Here are my skills:";
         text += "\n- " + bot.appendMention(message, "today") + ": ask for list of today's events";
         text += "\n- " + bot.appendMention(message, "tomorrow") + ": ask for list of tomorrow's events";
