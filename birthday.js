@@ -9,13 +9,12 @@ var client = methods.createClient();
 client.connect(function(err) {
   if(err) throw err;
   // check for birthdays
-  client.query('SELECT * FROM birthdays WHERE birthday = ($1);', today, function(err, res){
-    // end connection
-    if (res.rows.length>0){
+  client.query('SELECT * FROM birthdays WHERE birthday = ($1);', [today], function(err, res){
+    var len = res.rows.length;
+    if (len>0){
       client.end(function(err){
         if (err) throw err;
-        var size = res.rows.length;
-        for (var i = 0; i < size; i++) {
+        for (var i = 0; i < len; i++) {
           var email = res.rows[i].email;
           var first_name = res.rows[i].first_name;
           var text = 'Happy birthday ' + first_name + "!";
