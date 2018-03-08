@@ -2,6 +2,7 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
+var queue = 0;
 
 var methods = {
   formatDate: function (date){
@@ -106,6 +107,8 @@ var methods = {
         });
       }
       else {
+        queue++;
+        console.log(queue);
         console.log("Cache lookup unsuccessful");
 
         year = now.getFullYear().toString();
@@ -114,7 +117,6 @@ var methods = {
         //console.log("uri str = " + uri_str);
 
         request(uri_str, function(err, resp, html) {
-          console.log(resp);
           if (!err){
             //console.log("request");
             var results = [];
