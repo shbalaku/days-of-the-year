@@ -121,9 +121,10 @@ var methods = {
           if (queue == 0){
             break;
           }
-          if (queue == 1){
+          else if (queue == 1){
             processRequest(uri_str, date1, date2, function(text) {
               bot.reply(message, text);
+              console.log(text);
               queue--;
             });
           }
