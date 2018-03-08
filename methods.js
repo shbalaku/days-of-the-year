@@ -115,41 +115,49 @@ var methods = {
         //console.log("year = " + year);
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
         //console.log("uri str = " + uri_str);
-        
-        request(uri_str, function(err, resp, html) {
-          if (!err){
-            //console.log("request");
-            var results = [];
-            var bool = false;
-            var soup = new JSSoup(html);
-            var date_message = "**"+date1+"**";
-            var output_list=date_message + '\n';
-            var days_list = soup.findAll('h3', 'card-title');
-            var days_list2 = soup.findAll('h4', 'card-title-secondary');
-            for (var i = 0; i < days_list2.length; i++) {
-              if (((days_list2[i].text).indexOf(date1)>-1) || ((days_list[i].text).indexOf(date2)>-1)) {
-                results = results.concat(days_list[i].text);
-                output_list = output_list + '\n* ' + days_list[i].text;
-                bool = true;
-              }
-            }
-            if (bool == false)
-              bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
-            else {
-              // store last output
-              methods.storeLastOutput(date1, results, function(client) {
-                methods.storeInCache(client, date1, results, function() {
-                  // end connection
-                  client.end(function(err) {
-                    if (err) throw err;
-                    // bot reply
-                    bot.reply(message, output_list);
+        while (true) {
+          if (queue == 0)
+            break;
+          else if (queue == 1) {
+            request(uri_str, function(err, resp, html) {
+              if (!err){
+                //console.log("request");
+                var results = [];
+                var bool = false;
+                var soup = new JSSoup(html);
+                var date_message = "**"+date1+"**";
+                var output_list=date_message + '\n';
+                var days_list = soup.findAll('h3', 'card-title');
+                var days_list2 = soup.findAll('h4', 'card-title-secondary');
+                for (var i = 0; i < days_list2.length; i++) {
+                  if (((days_list2[i].text).indexOf(date1)>-1) || ((days_list[i].text).indexOf(date2)>-1)) {
+                    results = results.concat(days_list[i].text);
+                    output_list = output_list + '\n* ' + days_list[i].text;
+                    bool = true;
+                  }
+                }
+                if (bool == false) {
+                  bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
+                  queue = queue - 1;
+                }
+                else {
+                  // store last output
+                  methods.storeLastOutput(date1, results, function(client) {
+                    methods.storeInCache(client, date1, results, function() {
+                      // end connection
+                      client.end(function(err) {
+                        if (err) throw err;
+                        // bot reply
+                        bot.reply(message, output_list);
+                        queue = queue - 1;
+                      });
+                    });
                   });
-                });
-              });
-            }
+                }
+              }
+            });
           }
-        });
+        }
       }
     });
   },
