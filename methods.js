@@ -120,7 +120,7 @@ var methods = {
           else if (queue == 1) {
             request(uri_str, function(err, resp, html) {
               if (!err){
-                //console.log("request");
+                console.log("request");
                 var results = [];
                 var bool = false;
                 var soup = new JSSoup(html);
