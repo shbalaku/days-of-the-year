@@ -116,7 +116,7 @@ var methods = {
         request(uri_str, function(err, resp, html) {
           if (!err){
             //console.log("request");
-            //var results = [];
+            var results = [];
             var bool = false;
             var soup = new JSSoup(html);
             var date_message = "**"+date1+"**";
@@ -125,7 +125,7 @@ var methods = {
             var days_list2 = soup.findAll('h4', 'card-title-secondary');
             for (var i = 0; i < days_list2.length; i++) {
               if (((days_list2[i].text).indexOf(date1)>-1) || ((days_list[i].text).indexOf(date2)>-1)) {
-                //results = results.concat(days_list[i].text);
+                results = results.concat(days_list[i].text);
                 output_list = output_list + '\n* ' + days_list[i].text;
                 bool = true;
               }
