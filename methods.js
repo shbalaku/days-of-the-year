@@ -112,10 +112,9 @@ var methods = {
         year = now.getFullYear().toString();
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
 
-        var results = [];
-
         request(uri_str, function(err, resp, html) {
           if (!err){
+            var results = [];
             var soup = new JSSoup(html);
             var days_list = soup.findAll('h3', 'card-title');
             var days_list2 = soup.findAll('h4', 'card-title-secondary');
