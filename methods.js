@@ -125,9 +125,9 @@ var methods = {
                 results = results.concat(days_list[i].text);
               }
             }
-            /*for (var i = 0; i < results.length; i++) {
+            for (var i = 0; i < results.length; i++) {
               console.log("results " + results[i]);
-            }*/
+            }
             if (results.length == 0)
               bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
             else {
