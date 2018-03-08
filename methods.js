@@ -109,13 +109,13 @@ var methods = {
         console.log("Cache lookup unsuccessful");
 
         year = now.getFullYear().toString();
-        console.log("year = " + year);
+        //console.log("year = " + year);
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
-        console.log("uri str = " + uri_str);
+        //console.log("uri str = " + uri_str);
 
         request(uri_str, function(err, resp, html) {
           if (!err){
-            console.log("request");
+            //console.log("request");
             var results = [];
             var soup = new JSSoup(html);
             var days_list = soup.findAll('h3', 'card-title');
@@ -125,9 +125,9 @@ var methods = {
                 results = results.concat(days_list[i].text);
               }
             }
-            for (var i = 0; i < results.length; i++) {
+            /*for (var i = 0; i < results.length; i++) {
               console.log("results " + results[i]);
-            }
+            }*/
             if (results.length == 0)
               bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
             else {
