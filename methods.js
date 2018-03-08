@@ -114,6 +114,7 @@ var methods = {
         //console.log("uri str = " + uri_str);
 
         request(uri_str, function(err, resp, html) {
+          console.log(resp);
           if (!err){
             //console.log("request");
             var results = [];
@@ -130,9 +131,6 @@ var methods = {
                 bool = true;
               }
             }
-            /*for (var i = 0; i < results.length; i++) {
-              console.log("results " + results[i]);
-            }*/
             if (bool == false)
               bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
             else {
