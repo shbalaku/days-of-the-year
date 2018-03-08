@@ -122,7 +122,7 @@ var methods = {
             break;
           }
           else if (queue == 1){
-            processRequest(uri_str, date1, date2, function(text) {
+            methods.processRequest(uri_str, date1, date2, function(text) {
               bot.reply(message, text);
               console.log(text);
               queue--;
