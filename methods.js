@@ -114,6 +114,7 @@ var methods = {
 
         request(uri_str, function(err, resp, html) {
           if (!err){
+            queue++;
             console.log("queue count = " + queue);
             var results = [];
             var bool = false;
