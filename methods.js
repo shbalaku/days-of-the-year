@@ -2,7 +2,6 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
-var Botkit = require('botkit');
 
 var methods = {
   formatDate: function (date){
@@ -110,10 +109,13 @@ var methods = {
         console.log("Cache lookup unsuccessful");
 
         year = now.getFullYear().toString();
+        console.log("year = " + year);
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
+        console.log("uri str = " + uri_str);
 
         request(uri_str, function(err, resp, html) {
           if (!err){
+            console.log("request");
             var results = [];
             var soup = new JSSoup(html);
             var days_list = soup.findAll('h3', 'card-title');
@@ -122,6 +124,9 @@ var methods = {
               if (((days_list2[i].text).indexOf(date1)>-1) || ((days_list[i].text).indexOf(date2)>-1)) {
                 results = results.concat(days_list[i].text);
               }
+            }
+            for (var i = 0; i < results.length; i++) {
+              console.log("results " + results[i]);
             }
             if (results.length == 0)
               bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
@@ -173,18 +178,6 @@ var methods = {
       returnString = returnString.substring(0,maxLength);
 
       return returnString;
-  },
-  createBot: function(callback) {
-    var env = process.env.NODE_ENV || "development";
-    var controller = Botkit.sparkbot({
-        public_address: process.env.PUBLIC_URL,
-        ciscospark_access_token: process.env.SPARK_TOKEN,
-        secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
-        webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')')
-    });
-    var bot = controller.spawn({
-    });
-    callback(bot);
   },
   encodeToday: function() {
     var d;

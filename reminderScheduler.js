@@ -4,8 +4,6 @@ var CiscoSpark = require('node-ciscospark');
 var spark = new CiscoSpark(process.env.SPARK_TOKEN);
 var methods = require('./methods.js');
 
-
-
 // global variables
 var client = methods.createClient();
 var d = methods.encodeToday();
