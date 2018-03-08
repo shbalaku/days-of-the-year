@@ -3,7 +3,6 @@
 var CiscoSpark = require('node-ciscospark');
 var spark = new CiscoSpark(process.env.SPARK_TOKEN);
 var methods = require('./methods.js');
-//var bot = require('botkit');
 
 
 
@@ -26,16 +25,13 @@ client.connect(function(err) {
           //var person_id = res.rows[i].person_id;
           var day = res.rows[i].day;
           var text = "It is " + day + " today!";
-
-
-          bot.say(message, text);
-          /*spark.messages.create({
+          spark.messages.create({
             toPersonEmail: email,
             text: text
           }, function (err, result) {
             if (err) console.error(err);
-            console.log(result);
-          });*/
+            //console.log(result);
+          });
         }
       }
     });
