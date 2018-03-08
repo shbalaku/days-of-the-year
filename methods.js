@@ -108,13 +108,12 @@ var methods = {
       }
       else {
         queue++;
-        console.log(queue);
+        console.log("queue count = " + queue);
         console.log("Cache lookup unsuccessful");
 
         year = now.getFullYear().toString();
-        //console.log("year = " + year);
         uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
-        //console.log("uri str = " + uri_str);
+
         while (true) {
           if (queue == 0)
             break;
@@ -156,6 +155,9 @@ var methods = {
                 }
               }
             });
+          }
+          else {
+            wait(500);
           }
         }
       }
