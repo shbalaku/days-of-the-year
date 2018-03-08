@@ -4,7 +4,7 @@ var methods = require('./methods.js');
 var d = methods.encodeToday();
 var today = methods.formatDate(d);
 
-var client = createClient();
+var client = methods.createClient();
 
 client.connect(function(err) {
   if(err) throw err;
