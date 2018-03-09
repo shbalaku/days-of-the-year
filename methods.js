@@ -71,7 +71,7 @@ var methods = {
       // execute query
       var query = [day];
       client.query('SELECT * FROM cache WHERE day @> $1;', query, function (err, res) {
-        if (err) throw err;
+        if (err) console.log(err);
         // end client
         client.end(function(err) {
           if (err) throw err;
