@@ -70,9 +70,9 @@ var methods = {
 
       // execute query
       var query = [day];
-      client.query('SELECT * FROM cache WHERE day @> $1;', [query], function (err, res) {
+      client.query('SELECT * FROM cache WHERE day @> $1;', query, function (err, res) {
         if (err) throw err;
-        // end Client
+        // end client
         client.end(function(err) {
           if (err) throw err;
           var date = res.rows[0].date;
