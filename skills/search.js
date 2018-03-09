@@ -12,6 +12,11 @@ module.exports = function (controller) {
 
         var results = [];
         var query = message.match[1];
+        methods.cacheLookupDay(query, function(date) {
+          var text = date + ' will be ' + query + '!';
+          bot.reply(message, text);
+        });
+        /*
         var query_encode = encodeURI(query);
         uri_str = 'https://www.daysoftheyear.com/search/'+query_encode+'/';
 
@@ -82,7 +87,7 @@ module.exports = function (controller) {
               bot.reply(message, "It seems the day you've tried to search for could not be found.");
             }
           }
-        });
+        });*/
     });
 }
 

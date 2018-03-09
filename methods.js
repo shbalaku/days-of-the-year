@@ -62,6 +62,25 @@ var methods = {
       });
     });
   },
+  cacheLookupDay: function (day, callback) {
+    var client = methods.createClient();
+
+    client.connect( function(err) {
+      if (err) throw err;
+
+      // execute query
+      var query = [day];
+      client.query('SELECT date FROM cache WHERE day @> $1;', [query], function (err, res) {
+        if (err) throw err;
+        // end Client
+        client.end(function(err) {
+          if (err) throw err;
+          var date = res.rows[0].date;
+          callback(date);
+        });
+      });
+    });
+  },
   storeLastOutput: function (date, days, callback) {
     var client = methods.createClient();
 
