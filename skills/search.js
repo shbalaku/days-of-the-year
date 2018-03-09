@@ -12,6 +12,7 @@ module.exports = function (controller) {
 
         var results = [];
         var query = message.match[1];
+        console.log(query);
         methods.cacheLookupDay(query, function(date) {
           var text = date + ' will be ' + query + '!';
           bot.reply(message, text);
