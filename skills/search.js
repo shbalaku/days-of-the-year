@@ -11,7 +11,7 @@ module.exports = function (controller) {
     controller.hears('when is (.*)', 'direct_mention, direct_message', function (bot, message) {
 
         //var results = [];
-        var query = '$$'+message.match[1]+'$$';
+        var query = message.match[1];
         // try find exact match
         findExactMatch(query, function(res){
           if (res != 0) {
