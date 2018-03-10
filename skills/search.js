@@ -15,10 +15,12 @@ module.exports = function (controller) {
         // try find exact match
         findExactMatch(query, function(res){
           if (res != 0) {
+            console.log('Exact match found');
             var text = res.date + ' will be ' + res.day + '!';
             bot.reply(message, text);
           }
           else {
+            console.log('Could not find exact match');
             // website search
             websiteSearch(query, function(text) {
               bot.reply(message, text);
