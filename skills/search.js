@@ -15,7 +15,8 @@ module.exports = function (controller) {
         // try find exact match
         findExactMatch(query, function(res){
           if (res != 0) {
-            console.log(res);
+            var text = res.date + ' will be ' + res.day + '!';
+            bot.reply(message, text);
           }
           else {
             // regex search
@@ -108,14 +109,19 @@ function findExactMatch(query, callback) {
   client.connect(function(err) {
     if (err) throw err;
     // execute exact match query (case insensitive)
-    client.query('SELECT date FROM cache WHERE TEXT(days) ~* ($1);',[query], function(err,res){
+    client.query('SELECT * FROM cache WHERE TEXT(days) ~* ($1);',[query], function(err,res){
       if (err) throw err;
       // end client connection
       client.end(function(err) {
         if (err) throw err;
         if (res){
           var date = res.rows[0].date;
-          callback(date);
+          var day = res.rows[0].days.match('/'+query+'/i');
+          var resp = {
+            date: date,
+            day: day
+          };
+          callback(resp);
         }
         else {
           callback(0);
