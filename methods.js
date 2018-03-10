@@ -2,7 +2,7 @@ var request = require('request');
 var JSSoup = require('jssoup').default;
 var now = new Date();
 const { Client } = require('pg');
-var queue = 0;
+//var queue = 0;
 
 var methods = {
   formatDate: function (date){
@@ -134,8 +134,8 @@ var methods = {
 
         request(uri_str, function(err, resp, html) {
           if (!err){
-            queue++;
-            console.log("queue count = " + queue);
+            //queue++;
+            //console.log("queue count = " + queue);
             var results = [];
             var bool = false;
             var soup = new JSSoup(html);
