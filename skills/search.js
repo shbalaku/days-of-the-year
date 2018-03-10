@@ -18,7 +18,7 @@ module.exports = function (controller) {
             client.end(function(err){
               var count = res.rows.length;
               for (var i = 0; i < count; i++) {
-                console.log(res.rows[i]);
+                console.log(res.rows[i].days);
               }
             });
           });
