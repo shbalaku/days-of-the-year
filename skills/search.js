@@ -12,16 +12,9 @@ module.exports = function (controller) {
 
         //var results = [];
         var query = message.match[1];
-        client = methods.createClient();
-        client.connect(function(err) {
-          client.query('SELECT days FROM cache;', function(err,res){
-            client.end(function(err){
-              var count = res.rows.length;
-              for (var i = 0; i < count; i++) {
-                console.log(res.rows[i].days);
-              }
-            });
-          });
+        // try find exact match
+        findExactMatch(query, function(){
+
         });
         /*
         console.log(query);
@@ -103,6 +96,24 @@ module.exports = function (controller) {
           }
         });*/
     });
+}
+
+function findExactMatch(query, callback) {
+  var client = methods.createClient();
+  client.connect(function(err) {
+    if (err) throw err;
+    // execute exact match query (case insensitive)
+    client.query('SELECT days FROM cache WHERE TEXT(days) ~* ($1);',[query], function(err,res){
+      if (err) throw err;
+      // end client connection
+      client.end(function(err) {
+        if (err) throw err;
+        if (res){
+          console.log(res.rows[0].days);
+        }
+      });
+    });
+  });
 }
 
 function pageSearch(uri) {
