@@ -114,8 +114,8 @@ function findExactMatch(query, callback) {
       // end client connection
       client.end(function(err) {
         if (err) throw err;
-        console.log(res);
-        if (res.rows.length > 0){
+        // process result
+        if (res.rowCount > 0){
           var day;
           var date = res.rows[0].date;
           var days_list = res.rows[0].days;
