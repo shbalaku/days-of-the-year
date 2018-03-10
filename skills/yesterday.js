@@ -9,7 +9,9 @@ module.exports = function (controller) {
     controller.hears('yesterday', 'direct_mention, direct_message', function (bot, message) {
         date = encodeYesterday();
         // process date query
-        methods.processQuery(date, bot, message);
+        methods.processQuery(date, function(text){
+          bot.reply(message, text);
+        });
     });
 }
 

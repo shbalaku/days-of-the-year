@@ -10,6 +10,8 @@ module.exports = function (controller) {
     controller.hears('today', 'direct_mention, direct_message', function (bot, message) {
         date = methods.encodeToday();
         // process date query
-        methods.processQuery(date, bot, message);
+        methods.processQuery(date, function(text){
+          bot.reply(message, text);
+        });
     });
 }

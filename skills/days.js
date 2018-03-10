@@ -15,7 +15,9 @@ module.exports = function (controller) {
           month = reformat(month);
           day = reformat(day);
           date = month + "/" + day;
-          methods.processQuery(date, bot, message);
+          methods.processQuery(date, function(text){
+            bot.reply(message, text);
+          });
         }
         else {
           bot.reply(message, "Something went wrong. Please check you have entered a valid date. Thank you. Sorry this happened...awkward.");

@@ -45,19 +45,19 @@ var methods = {
       // execute query
       client.query('SELECT * FROM cache WHERE date = $1;', [date], function(err, res) {
         if (err) throw err;
-
-        var results = [];
-        // process results
-        var row_count = res.rows.length;
-        if (row_count > 0) {
-          results = res.rows[0].days;
-          callback(results);
-        }
-        else {
-          callback(0);
-        }
         client.end(function(err) {
           if(err) throw err;
+
+          var results = [];
+          // process results
+          var row_count = res.rows.length;
+          if (row_count > 0) {
+            results = res.rows[0].days;
+            callback(results);
+          }
+          else {
+            callback(0);
+          }
         });
       });
     });
@@ -107,7 +107,7 @@ var methods = {
       callback();
     });
   },
-  processQuery: function (date, bot, message) {
+  processQuery: function (date, callback) {
     [date1, date2] = methods.formatDate(date);
     // look up date in cache table
     methods.cacheLookup(date1, function(res) {
@@ -122,7 +122,7 @@ var methods = {
             for (var i=0; i<res.length; i++){
               output_list = output_list + '\n* ' + res[i];
             }
-            bot.reply(message, output_list);
+            callback(output_list);
           });
         });
       }
@@ -151,7 +151,7 @@ var methods = {
               }
             }
             if (bool == false)
-              bot.reply(message, "Something went wrong. Sorry this happened...awkward.");
+              callback("Something went wrong. Sorry this happened...awkward.");
             else {
               // store last output
               methods.storeLastOutput(date1, results, function(client) {
@@ -160,7 +160,7 @@ var methods = {
                   client.end(function(err) {
                     if (err) throw err;
                     // bot reply
-                    bot.reply(message, output_list);
+                    callback(output_list);
                   });
                 });
               });

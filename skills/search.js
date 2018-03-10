@@ -10,13 +10,17 @@ module.exports = function (controller) {
 
     controller.hears('when is (.*)', 'direct_mention, direct_message', function (bot, message) {
 
-        var results = [];
+        //var results = [];
         var query = message.match[1];
+        var query_encode = encodeURI(query);
+        
+        /*
         console.log(query);
         methods.cacheLookupDay(query, function(date) {
           var text = date + ' will be ' + query + '!';
           bot.reply(message, text);
         });
+        */
         /*
         var query_encode = encodeURI(query);
         uri_str = 'https://www.daysoftheyear.com/search/'+query_encode+'/';
