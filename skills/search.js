@@ -13,8 +13,13 @@ module.exports = function (controller) {
         //var results = [];
         var query = message.match[1];
         // try find exact match
-        findExactMatch(query, function(){
-
+        findExactMatch(query, function(res){
+          if (res != 0) {
+            console.log(res);
+          }
+          else {
+            // regex search
+          }
         });
         /*
         console.log(query);
@@ -103,13 +108,17 @@ function findExactMatch(query, callback) {
   client.connect(function(err) {
     if (err) throw err;
     // execute exact match query (case insensitive)
-    client.query('SELECT days FROM cache WHERE TEXT(days) ~* ($1);',[query], function(err,res){
+    client.query('SELECT date FROM cache WHERE TEXT(days) ~* ($1);',[query], function(err,res){
       if (err) throw err;
       // end client connection
       client.end(function(err) {
         if (err) throw err;
         if (res){
-          console.log(res.rows[0].days);
+          var date = res.rows[0].date;
+          callback(date);
+        }
+        else {
+          callback(0);
         }
       });
     });
