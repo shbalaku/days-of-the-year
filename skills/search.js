@@ -12,8 +12,17 @@ module.exports = function (controller) {
 
         //var results = [];
         var query = message.match[1];
-        var query_encode = encodeURI(query);
-        
+        client = methods.createClient();
+        client.connect(function(err) {
+          client.query('SELECT days FROM cache;', function(err,res){
+            client.end(function(err){
+              var count = res.rows.length;
+              for (var i = 0; i < count; i++) {
+                console.log(res.rows[i]);
+              }
+            });
+          });
+        });
         /*
         console.log(query);
         methods.cacheLookupDay(query, function(date) {
