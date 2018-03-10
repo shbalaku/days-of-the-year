@@ -115,8 +115,15 @@ function findExactMatch(query, callback) {
       client.end(function(err) {
         if (err) throw err;
         if (res){
+          var day;
           var date = res.rows[0].date;
-          var day = res.rows[0].days.match('/'+query+'/i');
+          var days_list = res.rows[0].days;
+          var regex = new RegExp(query, 'i');
+          // find day in days list returned
+          for (var i = 0; i < days_list.length; i++) {
+            if (days_list[i].match(regex))
+              day = days_list[i];
+          }
           var resp = {
             date: date,
             day: day
