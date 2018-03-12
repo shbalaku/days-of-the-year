@@ -4,6 +4,7 @@ var methods = require('./methods.js');
 var now = new Date();
 var d = methods.encodeToday();
 var request = require('request');
+var JSSoup = require('jssoup').default;
 var date = methods.formatDate(d);
 
 [date1, date2] = methods.formatDate(date);
