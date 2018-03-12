@@ -16,7 +16,7 @@ methods.cacheLookup(date1, function(res) {
     console.log("Cache lookup unsuccessful");
 
     year = now.getFullYear().toString();
-    uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+date;
+    uri_str = 'https://www.daysoftheyear.com/days/'+year+'/'+d;
 
     request(uri_str, function(err, resp, html) {
       if (!err){
