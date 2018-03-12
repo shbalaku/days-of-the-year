@@ -1,5 +1,3 @@
-// #!/usr/bin/env node
-
 var CiscoSpark = require('node-ciscospark');
 var spark = new CiscoSpark(process.env.SPARK_TOKEN);
 var methods = require('./methods.js');
