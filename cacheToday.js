@@ -3,6 +3,7 @@ var methods = require('./methods.js');
 // global variables
 var now = new Date();
 var d = methods.encodeToday();
+var request = require('request');
 var date = methods.formatDate(d);
 
 [date1, date2] = methods.formatDate(date);
