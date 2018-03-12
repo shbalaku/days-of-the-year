@@ -3,12 +3,9 @@ var methods = require('./methods.js');
 // global variables
 var now = new Date();
 var d = methods.encodeToday();
-console.log(d);
-var date = methods.formatDate(d);
+[date1, date2] = methods.formatDate(d);
 var request = require('request');
 var JSSoup = require('jssoup').default;
-
-[date1, date2] = methods.formatDate(date);
 
 // look up date in cache table
 methods.cacheLookup(date1, function(res) {
