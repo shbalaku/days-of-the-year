@@ -36,10 +36,13 @@ methods.cacheLookup(date1, function(res) {
         else {
           // store in cache
           var client = methods.createClient();
-          methods.storeInCache(client, date1, results, function() {
-            // end connection
-            client.end(function(err) {
-              if (err) throw err;
+          client.connect(function(err){
+            if (err) throw err;
+            methods.storeInCache(client, date1, results, function() {
+              // end connection
+              client.end(function(err) {
+                if (err) throw err;
+              });
             });
           });
         }
