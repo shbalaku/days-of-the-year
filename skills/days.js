@@ -9,7 +9,7 @@ module.exports = function (controller) {
 
     controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
         console.log(message.text);
-        var test = chrono.parseDate(message.text).start;
+        var test = chrono.parse(message.text).start;
         console.log(test);
         var day = message.match[1].slice(-2);
         var month = message.match[2];
