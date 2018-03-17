@@ -9,19 +9,21 @@ module.exports = function (controller) {
     controller.hears('(.*)', 'direct_mention, direct_message', function (bot, message) {
       // nlp parsing
         var chrono_obj = chrono.parse(message.text)[0];
-        var day = chrono_obj.start.knownValues.day;
-        var month = chrono_obj.start.knownValues.month;
+        if (chrono_obj != undefined) {
+          var day = chrono_obj.start.knownValues.day;
+          var month = chrono_obj.start.knownValues.month;
 
-        if (validateDay(day) && validateMonth(month)){
-          month = reformat(month);
-          day = reformat(day);
-          date = month + "/" + day;
-          methods.processQuery(date, function(text){
-            bot.reply(message, text);
-          });
-        }
-        else {
-          bot.reply(message, "Something went wrong. Please check you have entered a valid date. Thank you. Sorry this happened...awkward.");
+          if (validateDay(day) && validateMonth(month)){
+            month = reformat(month);
+            day = reformat(day);
+            date = month + "/" + day;
+            methods.processQuery(date, function(text){
+              bot.reply(message, text);
+            });
+          }
+          else {
+            bot.reply(message, "Something went wrong. Please check you have entered a valid date. Thank you. Sorry this happened...awkward.");
+          }
         }
     });
 }
