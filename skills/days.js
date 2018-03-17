@@ -12,8 +12,8 @@ module.exports = function (controller) {
         //var test = chrono.parse(message.text)[0].start;
         var chrono_obj = chrono.parse(message.text)[0];
         console.log(chrono_obj);
-        var day = chrono_obj.start.day;
-        var month = chrono_obj.start.month;
+        var day = chrono_obj.start.knownValues.day;
+        var month = chrono_obj.start.knownValues.month;
         //var day = message.match[1].slice(-2);
         //var month = message.match[2];
 
