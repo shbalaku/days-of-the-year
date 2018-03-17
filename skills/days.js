@@ -3,11 +3,14 @@
 //
 var now = new Date();
 var methods = require('./../methods.js');
+var chrono = require('chrono-node');
 
 module.exports = function (controller) {
 
     controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
 
+        var test = chrono.parseDate(message).start.date();
+        console.log(test);
         var day = message.match[1].slice(-2);
         var month = message.match[2];
 

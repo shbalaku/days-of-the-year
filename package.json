@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "0.6.0",
+    "chrono-node": "^1.3.5",
     "fuzzy": "^0.1.3",
     "jssoup": "0.0.6",
     "node-ciscospark": "^1.0.3",
