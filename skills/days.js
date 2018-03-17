@@ -7,12 +7,14 @@ var chrono = require('chrono-node');
 
 module.exports = function (controller) {
 
-    controller.hears('(.*)/(.*)', 'direct_mention, direct_message', function (bot, message) {
-        console.log(message.text);
-        var test = chrono.parse(message.text)[0].start;
-        console.log(test);
-        var day = message.match[1].slice(-2);
-        var month = message.match[2];
+    controller.hears('(.*)', 'direct_mention, direct_message', function (bot, message) {
+        //console.log(message.text);
+        //var test = chrono.parse(message.text)[0].start;
+        var chrono_obj = chrono.parse(message.text)[0];
+        var day = chrono_obj.start.day;
+        var month = chrono_obj.start.month;
+        //var day = message.match[1].slice(-2);
+        //var month = message.match[2];
 
         if (validateDay(day) && validateMonth(month)){
           month = reformat(month);
