@@ -14,8 +14,6 @@ module.exports = function (controller) {
         console.log(chrono_obj);
         var day = chrono_obj.start.knownValues.day;
         var month = chrono_obj.start.knownValues.month;
-        //var day = message.match[1].slice(-2);
-        //var month = message.match[2];
 
         if (validateDay(day) && validateMonth(month)){
           month = reformat(month);
