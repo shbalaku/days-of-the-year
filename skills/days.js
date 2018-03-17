@@ -1,17 +1,14 @@
 //
 // Main functionality
 //
-var now = new Date();
 var methods = require('./../methods.js');
 var chrono = require('chrono-node');
 
 module.exports = function (controller) {
 
     controller.hears('(.*)', 'direct_mention, direct_message', function (bot, message) {
-        console.log(message.text);
-        //var test = chrono.parse(message.text)[0].start;
+      // nlp parsing
         var chrono_obj = chrono.parse(message.text)[0];
-        console.log(chrono_obj);
         var day = chrono_obj.start.knownValues.day;
         var month = chrono_obj.start.knownValues.month;
 
