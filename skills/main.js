@@ -180,9 +180,10 @@ module.exports = function (controller) {
         //
 
         controller.hears('(.*)', 'direct_mention, direct_message', function (bot, message) {
-          // nlp parsing
+            // nlp parsing
             var chrono_obj = chrono.parse(message.text)[0];
-            console.log(chrono_obj);
+            var test = chrono_obj.start.knownValues.day || chrono_obj.start.impliedValues.day;
+            console.log(test);
             if (chrono_obj != undefined) {
               var day = chrono_obj.start.knownValues.day;
               var month = chrono_obj.start.knownValues.month;
