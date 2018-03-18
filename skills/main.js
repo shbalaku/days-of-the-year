@@ -188,7 +188,7 @@ module.exports = function (controller) {
               console.log(date.getDate());
               console.log(date.getMonth()+1);
               var day = methods.reformat(date.getDate());
-              var month = methods.reformat(date.getMonth());
+              var month = methods.reformat(date.getMonth()+1);
               date = month + "/" + day;
               methods.processQuery(date, function(text){
                 bot.reply(message, text);
