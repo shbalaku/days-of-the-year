@@ -190,12 +190,6 @@ module.exports = function (controller) {
               methods.processQuery(date, function(text){
                 bot.reply(message, text);
               });
-              if (methods.validateDay(day) && methods.validateMonth(month)){
-
-              }
-              else {
-                bot.reply(message, "Something went wrong. Please check you have entered a valid date. Thank you. Sorry this happened...awkward.");
-              }
             }
         });
 }
