@@ -182,11 +182,9 @@ module.exports = function (controller) {
         controller.hears('(.*)', 'direct_mention, direct_message', function (bot, message) {
             // nlp parsing
             var chrono_obj = chrono.parse(message.text)[0];
-            var test = chrono_obj.start.knownValues.day || chrono_obj.start.impliedValues.day;
-            console.log(test);
             if (chrono_obj != undefined) {
-              var day = chrono_obj.start.knownValues.day;
-              var month = chrono_obj.start.knownValues.month;
+              var day = chrono_obj.start.knownValues.day || chrono_obj.start.impliedValues.day;
+              var month = chrono_obj.start.knownValues.month || chrono_obj.start.impliedValues.month;
 
               if (methods.validateDay(day) && methods.validateMonth(month)){
                 month = methods.reformat(month);
