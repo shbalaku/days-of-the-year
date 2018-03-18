@@ -186,7 +186,7 @@ module.exports = function (controller) {
               var date = chrono_obj.start.date();
               console.log(date);
               console.log(date.getDate());
-              console.log(date.getMonth());
+              console.log(date.getMonth()+1);
               var day = methods.reformat(date.getDate());
               var month = methods.reformat(date.getMonth());
               date = month + "/" + day;
