@@ -183,16 +183,15 @@ module.exports = function (controller) {
             // nlp parsing
             var chrono_obj = chrono.parse(message.text)[0];
             if (chrono_obj != undefined) {
-              var day = chrono_obj.start.knownValues.day || chrono_obj.start.impliedValues.day;
-              var month = chrono_obj.start.knownValues.month || chrono_obj.start.impliedValues.month;
-
+              var date = chrono_obj.start.date();
+              var day = methods.reformat(date.getDate());
+              var month = methods.reformat(date.getMonth());
+              date = month + "/" + day;
+              methods.processQuery(date, function(text){
+                bot.reply(message, text);
+              });
               if (methods.validateDay(day) && methods.validateMonth(month)){
-                month = methods.reformat(month);
-                day = methods.reformat(day);
-                date = month + "/" + day;
-                methods.processQuery(date, function(text){
-                  bot.reply(message, text);
-                });
+
               }
               else {
                 bot.reply(message, "Something went wrong. Please check you have entered a valid date. Thank you. Sorry this happened...awkward.");

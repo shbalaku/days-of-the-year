@@ -381,20 +381,6 @@ var methods = {
       }
     });
   },
-  validateDay: function(day){
-    var day_num = parseInt(day);
-    if (day_num<32 && day_num>0){
-      return true;
-    }
-    return false;
-  },
-  validateMonth: function(month){
-    var month_num = parseInt(month);
-    if (month_num<13 && month_num > 0){
-      return true;
-    }
-    return false;
-  },
   reformat: function(str){
     str_num = parseInt(str);
     if (str_num<10){
